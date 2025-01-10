@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+import authRoutes from "./routes/authRoutes.js";
+import librarianRoutes from "./routes/librarianRoutes.js";
+import readerRoutes from "./routes/readerRoutes.js";
 
 
 app.use(cors({
@@ -13,6 +16,11 @@ app.use(cors({
 app.options('*', cors());
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/auth", authRoutes);
+app.use("/librarian", librarianRoutes);
+app.use("/reader", readerRoutes);
 
 
 
