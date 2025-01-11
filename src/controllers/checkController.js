@@ -30,5 +30,22 @@ const checkOutBook = async (req, res) => {
     }
   };
 
-  module.exports = {checkOutBook}
+  const checkInBook = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const checkout = await prisma.checkout.update({
+        where: { id: parseInt(id, 10) },
+        data: { checkinDate: new Date(), status: 'RETURNED' },
+      });
+  
+      res.status(200).json({ message: "Book checked in successfully", checkout });
+    } catch (error) {
+      console.error("Error checking in book:", error.message);
+      res.status(500).json({ error: "Failed to check in book" });
+    }
+  };
+  
+
+  module.exports = {checkOutBook, checkInBook}
   
