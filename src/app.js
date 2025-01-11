@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path'); // Import path module
 const authRoutes = require("./routes/authRoutes.js");
+const bookRoutes = require("./routes/bookRoutes");
 const librarianRoutes = require("./routes/librarianRoutes.js");
 const readerRoutes = require("./routes/readerRoutes.js");
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/auth", authRoutes);
+app.use("/books", bookRoutes)
 app.use("/librarian", librarianRoutes);
 app.use("/reader", readerRoutes);
 
