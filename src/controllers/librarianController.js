@@ -1,4 +1,5 @@
 const prisma =require("../models/prisma");
+const { sendEmailReminders } = require('../services/emailService');
 
 const viewOverdueBooks = async (req, res) => {
     console.log("Fetching overdue books...");
@@ -22,7 +23,18 @@ const viewOverdueBooks = async (req, res) => {
       res.status(500).json({ error: "Failed to fetch overdue books" });
     }
   };
+
+  // Controller to trigger email reminders
+const triggerEmailReminders = async (req, res) => {
+    try {
+      await sendEmailReminders();
+      res.status(200).json({ message: 'Email reminders sent successfully.' });
+    } catch (error) {
+      console.error('Error triggering email reminders:', error.message);
+      res.status(500).json({ error: 'Failed to send email reminders.' });
+    }
+  };
   
 
-  module.exports = {viewOverdueBooks}
+  module.exports = {viewOverdueBooks, triggerEmailReminders}
   
