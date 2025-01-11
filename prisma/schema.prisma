@@ -15,6 +15,9 @@ model User {
   role         Role     @default(READER) // Default role is READER
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  checkouts    Checkout[]
+
+  @@index([email])
 }
 
 enum Role {
@@ -35,6 +38,33 @@ model Book {
   genre           String
   dateAdded       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  checkouts       Checkout[]
+
+  @@index([isbn])
 }
+
+model Checkout {
+  id                 Int       @id @default(autoincrement())
+  userId             Int
+  bookId             Int
+  checkoutDate       DateTime  @default(now())
+  expectedCheckinDate DateTime
+  checkinDate        DateTime?
+  status             CheckoutStatus @default(CHECKED_OUT)
+
+  // Relationships
+  user               User      @relation(fields: [userId], references: [id])
+  book               Book      @relation(fields: [bookId], references: [id])
+
+  @@index([userId])
+  @@index([bookId])
+}
+
+enum CheckoutStatus {
+  CHECKED_OUT
+  RETURNED
+  OVERDUE
+}
+
 
 
