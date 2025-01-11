@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/auth", authRoutes);
-app.use("/books", bookRoutes)
+app.use("/book", bookRoutes)
 app.use("/librarian", librarianRoutes);
 app.use("/reader", readerRoutes);
 
