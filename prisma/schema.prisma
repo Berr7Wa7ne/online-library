@@ -12,12 +12,14 @@ model User {
   email        String   @unique
   password     String
   profilePhoto String?
-  role         Role     @default(READER)
+  role         Role     @default(READER) // Default role is READER
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
 enum Role {
-  LIBRARIAN
-  READER
+  SUPERADMIN  // Added superadmin role
+  LIBRARIAN  // Existing librarian role
+  READER     // Existing reader role
 }
+

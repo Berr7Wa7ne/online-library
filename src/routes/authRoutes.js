@@ -1,10 +1,15 @@
-import express from "express";
-import { register, login } from "../controllers/authController.js";
+const express = require("express");
+const upload = require("../utils/multerConfig");
+const { register, login, createLibrarian } = require("../controllers/authController.js");
+const { protect } = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 
 // Public routes
-router.post("/register", register);
+router.post("/register", upload.single("profilePhoto"), register);
 router.post("/login", login);
 
-export default router;
+// Protected routes
+router.post("/create-librarian", protect(["SUPERADMIN"]), createLibrarian);
+
+module.exports = router;

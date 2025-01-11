@@ -1,6 +1,6 @@
-import express from "express";
-import { protect } from "../middlewares/authMiddleware.js";
-import { getLibrarianDashboard } from "../controllers/librarianController.js";
+const express = require("express");
+const  { protect } = require("../middlewares/authMiddleware.js");
+const { getLibrarianDashboard } = require("../controllers/librarianController.js");
 
 
 const router = express.Router();
@@ -9,4 +9,4 @@ const router = express.Router();
 router.get("/dashboard", protect(["LIBRARIAN"]), getLibrarianDashboard);
 
 
-export default router;
+module.exports = router;
