@@ -1,6 +1,6 @@
 const express = require("express");
 const { protect } = require("../middlewares/authMiddleware.js");
-const { checkOutBook } = require("../controllers/checkController.js");
+const { checkOutBook, checkInBook } = require("../controllers/checkController.js");
 
 const router = express.Router();
 
