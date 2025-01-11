@@ -84,4 +84,33 @@ const updateBook = async (req, res) => {
   }
 };
 
-module.exports = { addBook, updateBook };
+const searchBooks = async (req, res) => {
+    try {
+      console.log("SearchBooks: Received search request with query parameters:", req.query);
+  
+      const { title, isbn, publisher, dateAdded } = req.query;
+  
+      console.log("SearchBooks: Constructing search filters...");
+      const filters = {
+        ...(title && { title: { contains: title, mode: 'insensitive' } }),
+        ...(isbn && { isbn }),
+        ...(publisher && { publisher: { contains: publisher, mode: 'insensitive' } }),
+        ...(dateAdded && { dateAdded: new Date(dateAdded) }),
+      };
+  
+      console.log("SearchBooks: Filters constructed:", filters);
+  
+      console.log("SearchBooks: Querying database for books...");
+      const books = await prisma.book.findMany({ where: filters });
+  
+      console.log(`SearchBooks: Found ${books.length} book(s).`);
+      res.status(200).json(books);
+    } catch (error) {
+      console.error("SearchBooks: Error occurred while searching books:", error.message);
+      res.status(500).json({ error: "Failed to search books" });
+    }
+  };
+  
+  
+
+module.exports = { addBook, updateBook, searchBooks };
