@@ -23,3 +23,18 @@ enum Role {
   READER     // Existing reader role
 }
 
+model Book {
+  id              Int      @id @default(autoincrement())
+  title           String
+  isbn            String   @unique
+  coverPage       String?  // Optional for book cover URL
+  revisionNumber  Int
+  publishedDate   DateTime
+  publisher       String
+  authors         String   // Can be updated later to relation if needed
+  genre           String
+  dateAdded       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+
