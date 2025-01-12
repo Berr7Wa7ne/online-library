@@ -10,14 +10,36 @@ const viewOverdueBooks = async (req, res) => {
   
       const overdueBooks = await prisma.checkout.findMany({
         where: {
-          status: 'CHECKED_OUT',
+          status: "CHECKED_OUT",
           expectedCheckinDate: { lt: currentDate },
         },
-        include: { user: true, book: true },
+        select: {
+          id: true, 
+          checkoutDate: true, 
+          expectedCheckinDate: true, 
+          user: { 
+            select: {
+              id: true,
+              email: true,
+            },
+          },
+          book: { 
+            select: {
+              id: true,
+              title: true,
+              isbn: true,
+            },
+          },
+        },
       });
+
+      const booksWithOverdueDays = overdueBooks.map(book => ({
+        ...book,
+        overdueDays: Math.floor((currentDate - new Date(book.expectedCheckinDate)) / (1000 * 60 * 60 * 24)), // Calculate days overdue
+      }));
   
-      console.log("Overdue books fetched successfully:", overdueBooks);
-      res.status(200).json(overdueBooks);
+      console.log("Overdue books fetched successfully:", booksWithOverdueDays);
+      res.status(200).json(booksWithOverdueDays);
     } catch (error) {
       console.error("Error fetching overdue books:", error.message);
       res.status(500).json({ error: "Failed to fetch overdue books" });

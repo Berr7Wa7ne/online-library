@@ -10,6 +10,6 @@ router.post("/register", upload.single("profilePhoto"), register);
 router.post("/login", login);
 
 // Protected routes
-router.post("/create-librarian", protect(["SUPERADMIN"]), createLibrarian);
+router.post("/create-librarian", upload.single("profilePhoto"), protect(["SUPERADMIN"]), createLibrarian);
 
 module.exports = router;

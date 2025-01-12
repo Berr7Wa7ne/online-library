@@ -8,6 +8,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || process.env.JWT_SECRET;
 const createLibrarian = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const profilePhoto = req.file?.path;
     console.log("Received request to create librarian with email:", email);
 
     console.log("Middleware attached user:", req.user);
@@ -45,6 +46,7 @@ const createLibrarian = async (req, res) => {
         email,
         password: hashedPassword,
         role: "LIBRARIAN",
+        profilePhoto,
       },
     });
     console.log("Librarian created successfully:", newLibrarian);
