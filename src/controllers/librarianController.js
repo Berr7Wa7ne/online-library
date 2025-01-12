@@ -1,5 +1,5 @@
 const prisma =require("../models/prisma");
-const { sendEmailReminders } = require('../services/emailService');
+const { sendEmailReminders, notifyLibrariansAboutOverdueBooks } = require('../services/emailService');
 
 const viewOverdueBooks = async (req, res) => {
     console.log("Fetching overdue books...");
@@ -46,7 +46,7 @@ const viewOverdueBooks = async (req, res) => {
     }
   };
 
-  // Controller to trigger email reminders
+  // Controller to trigger email reminders to readers
 const triggerEmailReminders = async (req, res) => {
     try {
       await sendEmailReminders();
@@ -56,7 +56,18 @@ const triggerEmailReminders = async (req, res) => {
       res.status(500).json({ error: 'Failed to send email reminders.' });
     }
   };
+
+  // Controller to trigger email reminders to librarian
+const triggerOverdueNotificationToLibrarian = async (req, res) => {
+    try {
+      await notifyLibrariansAboutOverdueBooks();
+      res.status(200).json({ message: 'Overdue notification sent to librarian.' });
+    } catch (error) {
+      console.error('Error notifying librarian about overdue books:', error.message);
+      res.status(500).json({ error: 'Failed to notify librarian.' });
+    }
+  };
   
 
-  module.exports = {viewOverdueBooks, triggerEmailReminders}
+  module.exports = {viewOverdueBooks, triggerEmailReminders, triggerOverdueNotificationToLibrarian}
   

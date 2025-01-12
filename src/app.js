@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path'); // Import path module
 const cron = require('node-cron');
 const { sendEmailReminders } = require('./services/emailService.js');
+const { triggerOverdueNotificationToLibrarian} = require('./controllers/librarianController.js');
 const authRoutes = require("./routes/authRoutes.js");
 const bookRoutes = require("./routes/bookRoutes");
 const checkRoutes = require("./routes/checkRoutes.js")
@@ -15,6 +16,11 @@ const app = express();
 cron.schedule('0 8 * * *', async () => {
     console.log('Running daily email reminders task...');
     await sendEmailReminders();
+  });
+
+  // Schedule the email reminders to Librarians to run daily at 11:59PM every day
+  cron.schedule('59 23 * * *', async () => {
+    await triggerOverdueNotificationToLibrarian();
   });
 
 app.use(cors({

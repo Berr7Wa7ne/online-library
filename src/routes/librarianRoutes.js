@@ -1,13 +1,16 @@
 const express = require("express");
 const  { protect } = require("../middlewares/authMiddleware.js");
-const { viewOverdueBooks } = require("../controllers/librarianController.js");
-const { triggerEmailReminders } = require('../controllers/librarianController.js');
+const { viewOverdueBooks, triggerEmailReminders, triggerOverdueNotificationToLibrarian } = require("../controllers/librarianController.js");
+
 
 
 const router = express.Router();
 
 
 router.get("/overdue", protect(["LIBRARIAN"]), viewOverdueBooks);
+// Notify users about upcoming due dates
 router.post('/send-reminders', protect(['LIBRARIAN']), triggerEmailReminders);
+// Notify librarians about overdue books
+router.post('/notify-librarian', protect(['SUPERADMIN']), triggerOverdueNotificationToLibrarian);
 
 module.exports = router;

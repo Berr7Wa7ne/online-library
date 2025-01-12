@@ -51,4 +51,41 @@ const sendEmailReminders = async () => {
   }
 };
 
-module.exports = { sendEmailReminders };
+const notifyLibrariansAboutOverdueBooks = async () => {
+  try {
+      const currentDate = new Date();
+      const overdueBooks = await prisma.checkout.findMany({
+          where: {
+              status: 'CHECKED_OUT',
+              expectedCheckinDate: { lt: currentDate },
+          },
+          include: { user: true, book: true },
+      });
+
+      if (overdueBooks.length === 0) {
+          console.log('No overdue books found. No notifications sent.');
+          return;
+      }
+
+      // Prepare email for librarians
+      const email = process.env.LIBRARIAN_EMAIL; // Assuming the librarian's email is stored in .env
+      const emailContent = overdueBooks.map((checkout) => 
+          `Book: ${checkout.book.title}\nChecked out by: (${checkout.user.email})\nExpected Check-in Date: ${checkout.expectedCheckinDate}`
+      ).join('\n\n');
+
+      const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: 'Overdue Books Notification',
+          text: `The following books are overdue:\n\n${emailContent}`,
+      };
+
+      // Send the email
+      await transporter.sendMail(mailOptions);
+      console.log('Notification email sent to the librarian.');
+  } catch (error) {
+      console.error('Error notifying librarian about overdue books:', error.message);
+  }
+};
+
+module.exports = { sendEmailReminders, notifyLibrariansAboutOverdueBooks };
