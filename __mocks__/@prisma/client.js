@@ -8,7 +8,14 @@ const mockPrisma = {
         findMany: jest.fn(),
         update: jest.fn(),
         create: jest.fn(),
+    },
+    checkout: {
+        findFirst: jest.fn(),
+        update: jest.fn(),
+        create: jest.fn(),
+        findMany: jest.fn(),
     }
+
   };
   
   const PrismaClient = jest.fn(() => mockPrisma);
