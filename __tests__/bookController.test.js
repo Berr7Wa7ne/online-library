@@ -207,3 +207,109 @@ describe('Book Controller - addBook', () => {
       expect(res.json).toHaveBeenCalledWith({ error: 'Failed to update book' });
     });
   });
+
+  describe('Book Controller - searchBooks', () => {
+    let req, res;
+  
+    beforeEach(() => {
+      req = {
+        query: {}, // Default to no query parameters
+      };
+      res = {
+        status: jest.fn(() => res),
+        json: jest.fn(),
+      };
+  
+      jest.clearAllMocks();
+    });
+  
+    test('should return books matching the search filters', async () => {
+      req.query = {
+        title: 'Test Book',
+        publisher: 'Test Publisher',
+      };
+  
+      // Mock prisma.book.findMany to return matching books
+      mockPrisma.book.findMany.mockResolvedValue([
+        {
+          id: 1,
+          title: 'Test Book',
+          isbn: '1234567890',
+          publisher: 'Test Publisher',
+          dateAdded: new Date('2023-01-01'),
+        },
+        {
+          id: 2,
+          title: 'Another Test Book',
+          isbn: '0987654321',
+          publisher: 'Test Publisher',
+          dateAdded: new Date('2023-02-01'),
+        },
+      ]);
+  
+      await searchBooks(req, res);
+  
+      expect(mockPrisma.book.findMany).toHaveBeenCalledWith({
+        where: {
+          title: { contains: 'Test Book', mode: 'insensitive' },
+          publisher: { contains: 'Test Publisher', mode: 'insensitive' },
+        },
+      });
+  
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith([
+        {
+          id: 1,
+          title: 'Test Book',
+          isbn: '1234567890',
+          publisher: 'Test Publisher',
+          dateAdded: new Date('2023-01-01'),
+        },
+        {
+          id: 2,
+          title: 'Another Test Book',
+          isbn: '0987654321',
+          publisher: 'Test Publisher',
+          dateAdded: new Date('2023-02-01'),
+        },
+      ]);
+    });
+  
+    test('should return an empty array when no books match the filters', async () => {
+      req.query = { title: 'Nonexistent Book' };
+  
+      // Mock prisma.book.findMany to return an empty array
+      mockPrisma.book.findMany.mockResolvedValue([]);
+  
+      await searchBooks(req, res);
+  
+      expect(mockPrisma.book.findMany).toHaveBeenCalledWith({
+        where: {
+          title: { contains: 'Nonexistent Book', mode: 'insensitive' },
+        },
+      });
+  
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith([]);
+    });
+  
+    test('should handle errors during the search operation', async () => {
+      req.query = { title: 'Error Book' };
+  
+      // Mock prisma.book.findMany to throw an error
+      const error = new Error('Database error');
+      mockPrisma.book.findMany.mockRejectedValue(error);
+  
+      await searchBooks(req, res);
+  
+      expect(mockPrisma.book.findMany).toHaveBeenCalledWith({
+        where: {
+          title: { contains: 'Error Book', mode: 'insensitive' },
+        },
+      });
+  
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Failed to search books' });
+    });
+  });
+  
