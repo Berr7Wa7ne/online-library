@@ -83,4 +83,127 @@ describe('Book Controller - addBook', () => {
     });
   });
 
+  describe('Book Controller - updateBook', () => {
+    let req, res;
   
+    beforeEach(() => {
+      req = {
+        params: { id: '1' }, // Simulate a book ID in params
+        body: {
+          title: 'Updated Book Title',
+          isbn: '123-4567890987',
+          coverPage: 'http://example.com/new-cover.jpg',
+          revisionNumber: 2,
+          publishedDate: '2023-02-01',
+          publisher: 'Updated Publisher',
+          authors: ['Author One', 'Author Two'],
+          genre: 'Updated Genre',
+        },
+      };
+  
+      res = {
+        status: jest.fn(() => res),
+        json: jest.fn(),
+      };
+  
+      jest.clearAllMocks();
+    });
+  
+    test('should update a book successfully', async () => {
+      // Mock the prisma.book.update method
+      mockPrisma.book.update.mockResolvedValue({
+        id: 1,
+        title: 'Updated Book Title',
+        isbn: '123-4567890987',
+        coverPage: 'http://example.com/new-cover.jpg',
+        revisionNumber: 2,
+        publishedDate: new Date('2023-02-01'),
+        publisher: 'Updated Publisher',
+        authors: ['Author One', 'Author Two'],
+        genre: 'Updated Genre',
+      });
+  
+      await updateBook(req, res);
+  
+      expect(mockPrisma.book.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: {
+          title: 'Updated Book Title',
+          isbn: '123-4567890987',
+          coverPage: 'http://example.com/new-cover.jpg',
+          revisionNumber: 2,
+          publishedDate: new Date('2023-02-01'),
+          publisher: 'Updated Publisher',
+          authors: ['Author One', 'Author Two'],
+          genre: 'Updated Genre',
+        },
+      });
+  
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'Book updated successfully',
+        book: {
+          id: 1,
+          title: 'Updated Book Title',
+          isbn: '123-4567890987',
+          coverPage: 'http://example.com/new-cover.jpg',
+          revisionNumber: 2,
+          publishedDate: new Date('2023-02-01'),
+          publisher: 'Updated Publisher',
+          authors: ['Author One', 'Author Two'],
+          genre: 'Updated Genre',
+        },
+      });
+    });
+  
+    test('should handle errors during book update', async () => {
+      // Mock prisma.book.update to throw a P2025 error (no record found)
+      const error = new Error('Record not found');
+      error.code = 'P2025';
+      mockPrisma.book.update.mockRejectedValue(error);
+  
+      await updateBook(req, res);
+  
+      expect(mockPrisma.book.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: {
+          title: 'Updated Book Title',
+          isbn: '123-4567890987',
+          coverPage: 'http://example.com/new-cover.jpg',
+          revisionNumber: 2,
+          publishedDate: new Date('2023-02-01'),
+          publisher: 'Updated Publisher',
+          authors: ['Author One', 'Author Two'],
+          genre: 'Updated Genre',
+        },
+      });
+  
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Failed to update book' });
+    });
+  
+    test('should handle generic errors during book update', async () => {
+      // Mock prisma.book.update to throw a generic error
+      const error = new Error('Database error');
+      mockPrisma.book.update.mockRejectedValue(error);
+  
+      await updateBook(req, res);
+  
+      expect(mockPrisma.book.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: {
+          title: 'Updated Book Title',
+          isbn: '123-4567890987',
+          coverPage: 'http://example.com/new-cover.jpg',
+          revisionNumber: 2,
+          publishedDate: new Date('2023-02-01'),
+          publisher: 'Updated Publisher',
+          authors: ['Author One', 'Author Two'],
+          genre: 'Updated Genre',
+        },
+      });
+  
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: 'Failed to update book' });
+    });
+  });
