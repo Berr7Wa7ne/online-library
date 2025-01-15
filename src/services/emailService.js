@@ -48,7 +48,7 @@ const sendEmailReminders = async () => {
     }
   } catch (error) {
     console.error('Error sending email reminders:', error.message);
-    throw error;
+    // throw error;
   }
 };
 
@@ -86,7 +86,7 @@ const notifyLibrariansAboutOverdueBooks = async () => {
       console.log('Notification email sent to the librarian.');
   } catch (error) {
       console.error('Error notifying librarian about overdue books:', error.message);
-      throw error;
+      // throw error;
   }
 };
 

@@ -8,7 +8,6 @@ const authRoutes = require("./routes/authRoutes.js");
 const bookRoutes = require("./routes/bookRoutes");
 const checkRoutes = require("./routes/checkRoutes.js")
 const librarianRoutes = require("./routes/librarianRoutes.js");
-const readerRoutes = require("./routes/readerRoutes.js");
 
 const app = express();
 
@@ -42,6 +41,5 @@ app.use("/auth", authRoutes);
 app.use("/book", bookRoutes)
 app.use("/check", checkRoutes)
 app.use("/librarian", librarianRoutes);
-app.use("/reader", readerRoutes);
 
 module.exports = app;

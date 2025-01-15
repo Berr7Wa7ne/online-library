@@ -97,7 +97,7 @@ const register = async (req, res) => {
     console.log("User registered successfully:", user);
 
     res.status(201).json({ message: "User registered successfully", user: { 
-      // id: user.id, 
+      id: user.id, 
       email: user.email, 
       role: user.role } });
   } catch (error) {
@@ -131,7 +131,6 @@ const login = async (req, res) => {
     // Create JWT token
     console.log("Generating JWT token...");
     const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET_KEY, { expiresIn: "1h" });
-    console.log("JWT_SECRET_KEY:", process.env.JWT_SECRET_KEY);
 
     console.log("Login successful for email:", email);
     res.status(200).json({ message: "Login successful", token });
