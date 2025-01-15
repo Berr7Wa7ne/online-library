@@ -7,10 +7,11 @@ const { viewOverdueBooks, triggerEmailReminders, triggerOverdueNotificationToLib
 const router = express.Router();
 
 
+// Librarian Protected route to view overdue books
 router.get("/overdue", protect(["LIBRARIAN"]), viewOverdueBooks);
-// Notify users about upcoming due dates
+// Librarian Protected route to Notify users about upcoming due dates
 router.post('/send-reminders', protect(['LIBRARIAN']), triggerEmailReminders);
-// Notify librarians about overdue books
+// Superadmin Protected route to Notify librarians about overdue books
 router.post('/notify-librarian', protect(['SUPERADMIN']), triggerOverdueNotificationToLibrarian);
 
 module.exports = router;

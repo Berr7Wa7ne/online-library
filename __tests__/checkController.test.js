@@ -5,6 +5,7 @@ describe('Check Controller - checkOutBook', () => {
     let req, res;
   
     beforeEach(() => {
+        // Set up mock request and response objects before each test
       req = {
         body: {
           bookId: 1,

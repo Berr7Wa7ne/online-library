@@ -75,7 +75,7 @@ const notifyLibrariansAboutOverdueBooks = async () => {
       ).join('\n\n');
 
       const mailOptions = {
-          from: process.env.EMAIL_USER,
+          from: process.env.EMAIL_USERNAME,
           to: email,
           subject: 'Overdue Books Notification',
           text: `The following books are overdue:\n\n${emailContent}`,
@@ -86,6 +86,7 @@ const notifyLibrariansAboutOverdueBooks = async () => {
       console.log('Notification email sent to the librarian.');
   } catch (error) {
       console.error('Error notifying librarian about overdue books:', error.message);
+      throw error;
   }
 };
 
