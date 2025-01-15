@@ -1,5 +1,19 @@
 const { viewOverdueBooks, triggerEmailReminders, triggerOverdueNotificationToLibrarian} = require('../../online-library/src/controllers/librarianController');
 const { mockPrisma } = require('@prisma/client');
+// const nodemailer = require('nodemailer');
+
+jest.mock('nodemailer', () => {
+    const mockTransporter = {
+      sendMail: jest.fn(),
+    };
+  
+    return {
+      createTransport: jest.fn(() => mockTransporter),
+      mockTransporter, // Exporting the mock for testing assertions
+    };
+  });
+  
+  const { mockTransporter } = require('nodemailer');
 
 describe('Librarian Controller - viewOverdueBooks', () => {
     let req, res;
@@ -111,5 +125,77 @@ describe('Librarian Controller - viewOverdueBooks', () => {
       });
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: 'Failed to fetch overdue books' });
+    });
+  });
+
+  describe('Librarian Controller - triggerEmailReminders', () => {
+    let req, res;
+  
+    beforeEach(() => {
+    process.env.EMAIL_USERNAME = 'test@example.com';
+      req = {};
+      res = {
+        status: jest.fn(() => res),
+        json: jest.fn(),
+      };
+  
+      jest.clearAllMocks();
+    });
+  
+    test('should send email reminders successfully', async () => {
+        const mockOverdueBooks = [
+          {
+            user: { email: 'user1@example.com' },
+            book: { title: 'Book 1' },
+            expectedCheckinDate: new Date().toISOString(),
+          },
+          {
+            user: { email: 'user2@example.com' },
+            book: { title: 'Book 2' },
+            expectedCheckinDate: new Date().toISOString(),
+          },
+        ];
+      
+        // Mock database response
+        mockPrisma.checkout.findMany.mockResolvedValue(mockOverdueBooks);
+      
+        // Mock successful email sending
+        mockTransporter.sendMail.mockResolvedValue({ messageId: 'mocked_message_id' });
+      
+        await triggerEmailReminders(req, res);
+      
+        // Assertions for nodemailer sendMail
+        expect(mockTransporter.sendMail).toHaveBeenCalledTimes(mockOverdueBooks.length);
+        mockOverdueBooks.forEach((book, index) => {
+          expect(mockTransporter.sendMail).toHaveBeenNthCalledWith(index + 1, {
+            from: process.env.EMAIL_USERNAME,
+            to: book.user.email,
+            subject: 'Library Check-in Reminder', // Match actual subject
+            text: expect.stringContaining(`please remember to return the book "${book.book.title}"`),
+          });
+        });
+      
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+          message: 'Email reminders sent successfully.',
+        });
+      });
+  
+    test('should handle errors during email reminder sending', async () => {
+      mockPrisma.checkout.findMany.mockResolvedValue([
+        {
+          user: { email: 'user1@example.com' },
+          book: { title: 'Book 1' },
+        },
+      ]);
+  
+      mockTransporter.sendMail.mockRejectedValue(new Error('Email sending failed'));
+  
+      await triggerEmailReminders(req, res);
+  
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Failed to send email reminders.',
+      });
     });
   });

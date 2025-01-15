@@ -36,7 +36,7 @@ const sendEmailReminders = async () => {
 
       // Construct the email content
       const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_USERNAME,
         to: email,
         subject: 'Library Check-in Reminder',
         text: `Dear user, please remember to return the book "${title}" by its expected check-in date (${checkout.expectedCheckinDate}).`,
@@ -48,6 +48,7 @@ const sendEmailReminders = async () => {
     }
   } catch (error) {
     console.error('Error sending email reminders:', error.message);
+    throw error;
   }
 };
 
