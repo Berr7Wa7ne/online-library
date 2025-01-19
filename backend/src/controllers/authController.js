@@ -112,7 +112,6 @@ const login = async (req, res) => {
   console.log("Login request received for email:", email);
 
   try {
-    // Find the user by email
     console.log("Finding user by email...");
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
@@ -120,7 +119,6 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Compare the password
     console.log("Comparing passwords...");
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
@@ -128,16 +126,16 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Create JWT token
     console.log("Generating JWT token...");
     const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET_KEY, { expiresIn: "1h" });
 
     console.log("Login successful for email:", email);
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful", token, role: user.role }); // ✅ Added role here
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: "Error logging in" });
   }
 };
+
 
 module.exports = { createLibrarian, register, login };

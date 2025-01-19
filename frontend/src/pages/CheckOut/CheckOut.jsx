@@ -8,7 +8,7 @@ const Checkout = () => {
   const [expectedCheckinDate, setExpectedCheckinDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [checkoutData, setCheckoutData] = useState({ book: {} });
+  const [checkoutData, setCheckoutData] = useState([ { book: {} }]);
 //   const [checkouts, setCheckouts] = useState([]); // Store fetched checkouts
 
     console.log("this is the checkoutdata", checkoutData)
@@ -91,7 +91,7 @@ const Checkout = () => {
                   Title
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {checkout.book.title}
+                  {checkout.book?.title}
                 </td>
               </tr>
               <tr>
@@ -99,7 +99,7 @@ const Checkout = () => {
                   Author
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {checkout.book.author}
+                  {checkout.book?.author}
                 </td>
               </tr>
               <tr>

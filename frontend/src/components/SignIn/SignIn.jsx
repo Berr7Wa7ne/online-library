@@ -17,41 +17,47 @@ const SignIn = () => {
       
     // Handle form submission
     const handleLogin = async (e) => {
-        console.log("Button clicked");
-        e.preventDefault();
-        setLoading(true);
-        setError("");
-      
-        try {
+      console.log("Button clicked");
+      e.preventDefault();
+      setLoading(true);
+      setError("");
+    
+      try {
           console.log("API function triggered");
-          const response = await axios.post(
-            "http://localhost:5000/auth/login",{
-            email,
-            password,
+  
+          const response = await axios.post("http://localhost:5000/auth/login", {
+              email,
+              password,
           });
-
-          const token = response.data.token;
-
-          if (!token){
-            throw new Error("No token received from API.");
+  
+          const { token, role } = response.data; // ✅ Now extracting role directly
+  
+          if (!token) {
+              throw new Error("No token received from API.");
           }
-      
-          localStorage.setItem("token", token);//
-          setToken(token);
+  
+          localStorage.setItem("token", token);
+          localStorage.setItem("role", role); // ✅ Store role in localStorage for later use
   
           console.log("API Response:", response);
-    
+  
           alert("Login Successful!");
-          console.log(response.data);
-          navigate('/home');
-        } catch (err) {
+  
+          // ✅ Navigate based on user role
+          if (role === "LIBRARIAN") {
+              navigate("/librarian");
+          } else {
+              navigate("/home"); // Default for readers
+          }
+  
+      } catch (err) {
           console.error("Login failed", err.response?.data);
           setError(err.response?.data?.error || "Something went wrong.");
-        } finally {
+      } finally {
           setLoading(false);
-        }
-      };
-            
+      }
+  };
+              
   return (
     <div className="flex flex-col items-center w-full h-full px-4 sm:px-6 md:px-10 lg:px-20">
       <div className="w-full max-w-[496px]">

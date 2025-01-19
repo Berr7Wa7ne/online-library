@@ -4,18 +4,31 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Checkout from "./pages/CheckOut/CheckOut";
 import CheckIn from "./pages/CheckIn/CheckIn";
+import Librarian from "./pages/Librarian/Librarian";
+import AddBook from "./pages/Librarian/AddBook/AddBook";
+import UpdateBook from "./pages/Librarian/UpdateBook/UpdateBook";
+import OverDueBooks from "./pages/Librarian/OverDueBook/OverDueBook";
 
 function App() {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Routes>
-        <Route path="/" element={<Login />} /> {/* Default is Login */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/checkin" element={<CheckIn />} />
-      </Routes>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Login />} />  {/* Default Login page */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkin" element={<CheckIn />} />
+
+          {/* Librarian Panel and Sub-routes */}
+          <Route path="/librarian" element={<Librarian />}>
+            {/* Sub-routes for Add Book, Update Book, and Overdue Books */}
+            <Route path="add-book" element={<AddBook />} />
+            <Route path="update-book" element={<UpdateBook />} />
+            <Route path="overdue-books" element={<OverDueBooks />} />
+          </Route>
+        </Routes>
     </div>
   );
 }
