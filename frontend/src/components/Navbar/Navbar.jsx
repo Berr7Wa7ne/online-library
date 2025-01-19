@@ -58,15 +58,18 @@ const Navbar = () => {
 
     {/* Desktop Navigation Links */}
     <div className="hidden md:flex gap-6">
-      <a href="#about" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
+      <a href="#" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
         Home
       </a>
-      <a href="#features" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
+      <a href="#" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
         Browse
       </a>
-      <a href="#pricing" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
-        My books
-      </a>
+      <Link to="/checkout" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
+            My Books
+      </Link>
+      <Link to="/checkin" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
+            My Checkouts
+      </Link>
       <a href="#faqs" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
         More
       </a>
@@ -86,13 +89,16 @@ const Navbar = () => {
       <a href="#about" className="py-2 px-4 text-black hover:bg-gray-100 font-sf-pro-rounded w-full text-center">
         Home
       </a>
-      <a href="#features" className="py-2 px-4 text-black hover:bg-gray-100 font-sf-pro-rounded w-full text-center">
+      <a href="#" className="py-2 px-4 text-black hover:bg-gray-100 font-sf-pro-rounded w-full text-center">
         Browse
       </a>
-      <a href="#pricing" className="py-2 px-4 text-black hover:bg-gray-100 font-sf-pro-rounded w-full text-center">
-        My books
-      </a>
-      <a href="#faqs" className="py-2 px-4 text-black hover:bg-gray-100 font-sf-pro-rounded w-full text-center">
+      <Link to="/checkout" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
+            My books
+      </Link>
+      <Link to="/checkin" className="text-black hover:text-gray-600 font-sf-pro-rounded text-[16px]">
+            My Checkouts
+      </Link>
+      <a href="#" className="py-2 px-4 text-black hover:bg-gray-100 font-sf-pro-rounded w-full text-center">
         More
       </a>
       <div className="flex flex-col gap-2 w-full px-4 mt-4 mr-5">

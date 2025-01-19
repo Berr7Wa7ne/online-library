@@ -11,9 +11,8 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);
+    const [token, setToken] = useState('');
 
-    const handleSetRememberMe = () => setRememberMe(!rememberMe);
       
       
     // Handle form submission
@@ -31,11 +30,14 @@ const SignIn = () => {
             password,
           });
 
-          if (rememberMe) {
-            localStorage.setItem('authToken', response.data.token);
-          } else {
-            sessionStorage.setItem('authToken', response.data.token);
+          const token = response.data.token;
+
+          if (!token){
+            throw new Error("No token received from API.");
           }
+      
+          localStorage.setItem("token", token);//
+          setToken(token);
   
           console.log("API Response:", response);
     

@@ -1,47 +1,58 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import HeroImage from '../../assets/library-4.jpg';
+import React, { useState } from "react";
+import axios from "axios";
+import HeroImage from "../../assets/library-4.jpg";
+import { useNavigate} from 'react-router-dom';
 
 const HeroSection = () => {
-  // State to manage the search input and results
-  const [searchQuery, setSearchQuery] = useState('');
+  // State for search query, titles, and errors
+  const [searchQuery, setSearchQuery] = useState("");
   const [titles, setTitles] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+
+  const navigate  = useNavigate();
+  // const book = { title: "Book Title", author: "Author Name" }; // Mocked book object
+  
+  // Function to navigate to Checkout page
+  const navigateToCheckout = () => {
+    navigate("/checkout", {
+      // state: { book }
+    });
+  };
 
   // Handle search input change
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Handle search form submission
+  // Handle search
   const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent page reload
-    setError('');
+    e.preventDefault();
+    setError(""); // Reset error
     try {
-      // Make the API call
-      const response = await axios.get(
-        `http://localhost:5000/book/searchBooks`,
-        {
-          params: { title: searchQuery }, // Pass the search query as a parameter
-        }
-      );
-
-      // Update the state with the search results
+      const response = await axios.get("http://localhost:5000/book/searchBooks", {
+        params: { title: searchQuery },
+      });
       const results = response.data;
 
       if (results.length > 0) {
-        setTitles(results.map((book) => book.title)); // Extract only titles
+        setTitles(results.map((book) => book.title)); // Extract titles
       } else {
         setTitles([]);
-        setError('No results found.');
+        setError("No results found.");
       }
-
-      console.log('Search Results:', response.data);
     } catch (err) {
-      console.error('Error searching books:', err);
-      setError('Failed to fetch search results.');
+      console.error("Error searching books:", err);
+      setError("Failed to fetch search results.");
     }
+  };
+
+  // Handle checkout navigation when a book title is clicked
+  const handleCheckoutNavigation = (title) => {
+    // Here you can map the title to a book object or use the mocked one
+    const selectedBook = { title, author: "Author Name" }; // You can replace this with actual book data from search results
+
+    // Now call navigateToCheckout to go to the Checkout page
+    navigateToCheckout(selectedBook);
   };
 
   return (
@@ -80,19 +91,14 @@ const HeroSection = () => {
                 <li
                   key={index}
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleCheckoutNavigation(title)} // Trigger checkout navigation
                 >
-                  {/* Dynamic URL Construction */}
-                  <a
-                    href={`/book/${encodeURIComponent(title)}`} // Navigate to the book's page
-                    className="text-blue-600"
-                  >
-                    {title}
-                  </a>
+                  {title}
                 </li>
               ))}
             </ul>
           ) : (
-            error && <p className="mt-4 text-gray-500">{error}</p> // Display error message
+            error && <p className="mt-4 text-gray-500">{error}</p>
           )}
         </div>
       </div>
