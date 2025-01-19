@@ -65,8 +65,8 @@ const AddBook = () => {
   };
   
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Add a New Book</h2>
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg mt-5">
+      <h2 className="text-xl font-bold mb-4 text-center">Add a New Book</h2>
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
@@ -145,7 +145,7 @@ const AddBook = () => {
               className="w-full p-2 border rounded"
             />
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded"
