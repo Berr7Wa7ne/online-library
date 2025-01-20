@@ -3,6 +3,7 @@ require('dotenv').config();
 const app = require('./app');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 5000;
 const prisma = new PrismaClient();
@@ -12,18 +13,28 @@ async function initializeSuperAdmin() {
   try {
     if (process.env.INIT_SUPERADMIN === 'true') {
       console.log('Initializing Superadmin...');
-      await prisma.user.upsert({
-        where: { email: 'admin@library.com' },
+      const superAdminEmail = 'admin@library.com';
+      const superAdminPassword = 'password123';
+      const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+      const superAdmin = await prisma.user.upsert({
+        where: { email: superAdminEmail },
         update: {
           role: 'SUPERADMIN',
         },
         create: {
-          email: 'admin@library.com',
-          password: await bcrypt.hash('password123', 10),
+          email: superAdminEmail,
+          password: await bcrypt.hash(superAdminPassword, 10),
           role: 'SUPERADMIN',
         },
       });
+
+      const token = jwt.sign({ userId: superAdmin.id, role: 'SUPERADMIN' }, JWT_SECRET_KEY, {
+        expiresIn: '30d', // Adjust as needed
+      });
+
       console.log('Superadmin initialized successfully.');
+      console.log('Use this token for superadmin actions:', token);
     } else {
       console.log('Skipping Superadmin initialization (INIT_SUPERADMIN not set to true).');
     }
@@ -47,3 +58,4 @@ initializeSuperAdmin()
     console.error('Error during server startup:', error);
     process.exit(1);
   });
+

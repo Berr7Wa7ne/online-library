@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 // Librarian Protected route to view overdue books
-router.get("/overdue", protect(["LIBRARIAN"]), viewOverdueBooks);
+router.get("/overdue", protect(["LIBRARIAN", "SUPERADMIN"]), viewOverdueBooks);
 // Librarian Protected route to Notify users about upcoming due dates
 router.post('/send-reminders', protect(['LIBRARIAN']), triggerEmailReminders);
 // Superadmin Protected route to Notify librarians about overdue books
