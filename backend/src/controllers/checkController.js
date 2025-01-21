@@ -20,7 +20,7 @@ const checkOutBook = async (req, res) => {
         // Fetch book details
         const book = await prisma.book.findUnique({
             where: { id: bookId },
-            select: { id: true, title: true, author: true, genre: true }, // Select necessary fields
+            select: { id: true, title: true, authors: true, genre: true }, // Select necessary fields
         });
 
         if (!book) {

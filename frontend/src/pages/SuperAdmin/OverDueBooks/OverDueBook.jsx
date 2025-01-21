@@ -82,7 +82,7 @@ const OverDueBook = () => {
       </table>
       <div className='flex justify-center'>
         <button
-          onClick={() => sendReminder(book.user.email)}
+          onClick={() => sendReminder()}
           className="bg-blue-500 text-white px-3 py-1 rounded mt-5"
           >
             Send Reminder

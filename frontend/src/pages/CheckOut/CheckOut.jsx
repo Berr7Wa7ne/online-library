@@ -37,16 +37,31 @@ const Checkout = () => {
   
     fetchCheckouts();
   }, []); // No need to depend on token
+
+  useEffect(() => {
+    const defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 10); // Add 10 days
+    setExpectedCheckinDate(defaultDate.toISOString().split("T")[0]); // Format as YYYY-MM-DD
+  }, []);
   
 
   const handleCheckout = async () => {
     try {
-        const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem('token');
       setIsLoading(true);
       setError("");
+
+      console.log("Checkout Data:", checkoutData);
+
+      if (!checkoutData?.[0]?.book?.id) {
+        setError("Book ID is missing. Please select a valid book to checkout.");
+        setIsLoading(false);
+        return;
+      }
+
   
       const response = await axios.post('http://localhost:5000/check/checkout', {
-        bookId: checkoutData?.book.id,
+        bookId: checkoutData?.[0]?.book?.id,
         expectedCheckinDate,
       }, {
         headers: { Authorization: `Bearer ${storedToken}` },
@@ -99,7 +114,7 @@ const Checkout = () => {
                   Author
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {checkout.book?.author}
+                  {checkout.book?.authors}
                 </td>
               </tr>
               <tr>
@@ -123,51 +138,63 @@ const Checkout = () => {
     </table>
   </div>
 
-  {/* Checkout Section */}
-  <div className="bg-gray-50 p-6 rounded-lg shadow mt-6">
-    <h3 className="text-lg font-bold mb-4">Checkout Book</h3>
-    <p className="text-gray-600 mb-4">
-      You are about to checkout the book:{" "}
-      <strong>
-        {checkoutData?.[0]?.book?.title || "Select a book to checkout"}
-      </strong>
-    </p>
+{/* Checkout Section */}
+<div className="bg-gray-50 p-6 rounded-lg shadow mt-6">
+  <h3 className="text-lg font-bold mb-4">Checkout Book</h3>
+  <p className="text-gray-600 mb-4">
+    You are about to checkout the book:{" "}
+    <strong>
+      {checkoutData?.[0]?.book?.title || "Select a book to checkout"}
+    </strong>
+  </p>
 
-    {/* Checkout Form */}
-    <div className="space-y-4">
-      <div>
-        <label htmlFor="checkinDate" className="block text-sm font-medium text-gray-700">
-          Expected Check-In Date
-        </label>
-        <input
-          id="checkinDate"
-          type="date"
-          value={expectedCheckinDate}
-          onChange={(e) => setExpectedCheckinDate(e.target.value)}
-          className="mt-2 w-full border border-gray-300 rounded p-3"
-        />
-      </div>
+  {/* Checkout Form */}
+  <div className="space-y-4">
+    {/* Hidden Input for Book ID */}
+    <input
+      type="hidden"
+      value={checkoutData?.[0]?.book?.id || "No book selected. Please select a book."}
+      readOnly
+      id="bookId"
+    />
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+    {/* Expected Check-In Date */}
+    <div>
+      <label htmlFor="checkinDate" className="block text-sm font-medium text-gray-700">
+        Expected Check-In Date
+      </label>
+      <input
+        id="checkinDate"
+        type="date"
+        value={expectedCheckinDate}
+        onChange={(e) => setExpectedCheckinDate(e.target.value)}
+        className="mt-2 w-full border border-gray-300 rounded p-3"
+      />
+    </div>
 
-      <div className="flex justify-end mt-6">
-        <button
-          onClick={handleCheckout}
-          className="bg-blue-500 text-white px-6 py-2 rounded-lg"
-          disabled={isLoading || !expectedCheckinDate}
-        >
-          {isLoading ? "Processing..." : "Confirm Checkout"}
-        </button>
-      </div>
+    {/* Error Display */}
+    {error && <p className="text-red-500 text-sm">{error}</p>}
+
+    {/* Confirm Checkout Button */}
+    <div className="flex justify-center mt-6">
+      <button
+        onClick={handleCheckout}
+        className="bg-blue-500 text-white px-6 py-2 rounded-lg"
+        disabled={isLoading || !expectedCheckinDate || !checkoutData?.[0]?.book?.id}
+      >
+        {isLoading ? "Processing..." : "Confirm Checkout"}
+      </button>
     </div>
   </div>
+</div>
+
 
 
       {/* Modal (Checkout Confirmation) */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h3 className="text-lg font-bold mb-4">Checkout Book</h3>
-        <p>Title: {checkoutData?.book.title}</p>
-        <p>Author: {checkoutData?.book.author}</p>
+        <p>Title: {checkoutData?.[0]?.book?.title || "No title available"}</p>
+        <p>Author: {checkoutData?.[0]?.book?.authors || "No author available"}</p>
 
         <div className="mt-4">
           <label htmlFor="checkinDate" className="block text-gray-600">
@@ -184,7 +211,7 @@ const Checkout = () => {
 
         {error && <p className="text-red-500 mt-2">{error}</p>}
 
-        <div className="flex justify-end mt-6">
+        <div className="flex justify-center mt-6">
           <button
             onClick={handleCheckout}
             className="bg-blue-500 text-white px-4 py-2 rounded"

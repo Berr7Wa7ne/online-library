@@ -1,23 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const CheckIn = ({ initialCheckouts = [] }) => {
 const [checkouts, setCheckouts] = useState(initialCheckouts || []);
-  const [loading, setLoading] = useState(null); // Track loading per book
+const [loading, setLoading] = useState(null); // Track loading per book
+
+useEffect(() => {
+  const fetchCheckouts = async () => {
+    try {
+          const token = localStorage.getItem('token'); // Get token inside the function
+          if (!token){
+            console.error("No token found, user is not authenticated.");
+            return; // Stop execution if no token
+          }
+          console.log("This is the token", token)
+
+      const response = await axios.get("http://localhost:5000/check/get-checkout", {
+        headers: { Authorization: `Bearer ${token}` }, // Use storedToken instead of token st
+      });
+
+      console.log("This is the response", response)
+      setCheckouts(response.data.checkouts);
+    } catch (error) {
+      console.error("Error fetching checkouts:", error);
+    }
+  };
+
+  fetchCheckouts();
+}, []); // No need to depend on token
 
   // Function to handle book check-in
   const handleCheckIn = async (id) => {
     try {
+      const token = localStorage.getItem('token'); // Get token inside the function
+      if (!token){
+        console.error("No token found, user is not authenticated.");
+        return; // Stop execution if no token
+      }
+      console.log("This is the token chekin endpoint", token)
+
       setLoading(id);
-      const response = await axios.put(`http://localhost:5000/check/checkin/${id}`);
+      const response = await axios.patch(`http://localhost:5000/check/checkin/${id}`,{}, {
+        headers: { Authorization: `Bearer ${token}` }, // Use storedToken instead of token st
+      });
       console.log(response.data);
 
       // Update the state with the returned book data
-      setCheckouts((prevCheckouts) =>
-        prevCheckouts.map((checkout) =>
-          checkout.id === id ? { ...response.data.checkout } : checkout
-        )
-      );
+      // setCheckouts((prevCheckouts) =>
+      //   prevCheckouts.map((checkout) =>
+      //     checkout.id === id ? { ...response.data.checkout } : checkout
+      //   )
+      // );
     } catch (error) {
       console.error("Error checking in book:", error);
     } finally {
