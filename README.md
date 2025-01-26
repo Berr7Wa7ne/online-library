@@ -21,10 +21,10 @@ npm install
 Start the frontend using Vite:
 npm run dev
 
-Access the Application
+Access the Application:
 Open your browser and navigate to http://localhost:5173.
 
-Features
+Features:
 Central login system for both librarians and readers.
 Librarians' accounts can only be created by a super admin.
 Readers can register their accounts via a self-registration page.
