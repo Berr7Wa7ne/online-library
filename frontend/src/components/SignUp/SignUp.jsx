@@ -7,6 +7,7 @@ import user from '../../assets/user.png';
 import google from '../../assets/google.png';
 
 const SignUp = () => {
+  //State variables
   const navigate = useNavigate();
   // const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  //Function to handle signing up
   const handleSignUp = async (e) => {
     console.log("Trigger API calls")
     e.preventDefault();
@@ -38,7 +40,7 @@ const SignUp = () => {
   };
 
 
-
+  //Return JSX code
   return (
     <div className="flex flex-col items-center w-full h-full px-4 sm:px-6 md:px-10 lg:px-20">
       <div className="w-full max-w-[496px]">

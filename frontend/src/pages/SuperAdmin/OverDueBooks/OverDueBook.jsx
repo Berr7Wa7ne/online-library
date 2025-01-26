@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const OverDueBook = () => {
+  //State variable
   const [overdueBooks, setOverdueBooks] = useState([]);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
+  //function for fetching overdue books
   const fetchOverdueBooks = async () => {
     try {
       const token = localStorage.getItem('token'); // Assuming token-based auth
@@ -23,6 +25,7 @@ const OverDueBook = () => {
     }
   };
 
+  //Function for sending email notificaion to librarians
   const sendReminder = async (email) => {
     try {
       const token = localStorage.getItem('token');

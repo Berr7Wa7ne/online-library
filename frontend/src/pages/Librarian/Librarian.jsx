@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom'; // Render sub-routes
 import Sidebar from '../../components/Sidebar/Sidebar'; // Import Sidebar
 
+//Rendered Librarian component
 const Librarian = () => {
   return (
     <div className="min-h-screen flex">

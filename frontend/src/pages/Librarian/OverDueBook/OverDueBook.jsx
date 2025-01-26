@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const OverDueBooks = () => {
+  //State variables
   const [overdueBooks, setOverdueBooks] = useState([]);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
+  //Function to fetch overdue books
   const fetchOverdueBooks = async () => {
     try {
       const token = localStorage.getItem('token'); // Assuming token-based auth
@@ -23,6 +25,7 @@ const OverDueBooks = () => {
     }
   };
 
+  //function to send email reminder
   const sendReminder = async (email) => {
     try {
       const token = localStorage.getItem('token');
@@ -44,6 +47,7 @@ const OverDueBooks = () => {
     fetchOverdueBooks();
   }, []);
 
+  //Return JSX code
   return (
     <div className="max-w-6xl mx-auto p-8">
       <h2 className="text-2xl font-bold mb-4">Overdue Books</h2>

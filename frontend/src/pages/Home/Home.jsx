@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import HeroSection from '../../components/HeroSection/HeroSection';
 import OurResources from '../../components/OurResourcesSection/OurResourcesSection';
 
+//Rendered Home page component
 const Home = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">

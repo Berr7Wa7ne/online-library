@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const CheckIn = ({ initialCheckouts = [] }) => {
+  //State variables
 const [checkouts, setCheckouts] = useState(initialCheckouts || []);
 const [loading, setLoading] = useState(null); // Track loading per book
 
+// Fetch checkouts when the component mounts
 useEffect(() => {
   const fetchCheckouts = async () => {
     try {
@@ -58,6 +60,7 @@ useEffect(() => {
     }
   };
 
+  //Return JSX code 
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">My Checkouts</h2>

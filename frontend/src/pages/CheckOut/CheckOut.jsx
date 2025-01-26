@@ -4,6 +4,7 @@ import Modal from "../../components/Modal/Modal";
 // import { useLocation } from "react-router-dom";
 
 const Checkout = () => {
+    //State variables
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expectedCheckinDate, setExpectedCheckinDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +46,7 @@ const Checkout = () => {
   }, []);
   
 
+  // Function to handle book check-in
   const handleCheckout = async () => {
     try {
     const storedToken = localStorage.getItem('token');
@@ -82,6 +84,8 @@ const Checkout = () => {
     }
   };
 
+
+  //Return JSX code 
   return (
 <div className="max-w-4xl mx-auto p-8 space-y-8">
   {/* Table Container */}

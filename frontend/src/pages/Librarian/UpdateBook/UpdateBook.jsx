@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const UpdateBook = () => {
+  //State variable
   const [bookId, setBookId] = useState('');  // For selecting which book to update
   const [title, setTitle] = useState('');
   const [isbn, setIsbn] = useState('');
@@ -14,6 +15,7 @@ const UpdateBook = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
+  //Function for handling submit after book update
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -61,6 +63,7 @@ const UpdateBook = () => {
     }
   };
 
+  //Return JSX code
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-4 bg-white shadow rounded-lg">
       <h2 className="text-2xl font-bold mb-4 text-center">Update Book</h2>

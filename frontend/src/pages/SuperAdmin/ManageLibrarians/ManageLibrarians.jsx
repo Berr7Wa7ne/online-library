@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ManageLibrarian = () => {
+  //State variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [profilePhoto, setProfilePhoto] = useState(null);
@@ -12,6 +13,7 @@ const ManageLibrarian = () => {
     setProfilePhoto(e.target.files[0]);
   };
 
+  //Function for submitting librarian registration form
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -36,6 +38,7 @@ const ManageLibrarian = () => {
       }      
   };
 
+  //Returned JSX code
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4">Create Librarian</h2>
