@@ -129,5 +129,19 @@ const searchBooks = async (req, res) => {
   }
 };
 
+const getAllBooks = async (req, res) => {
+  try {
+    console.log("Fetching all books..."); // Log to check if the function is called
+
+    const books = await prisma.book.findMany(); // ✅ Use findMany() instead of findAll()
+
+    console.log("Books fetched successfully:", books); // Log fetched books
+    res.json({ books });
+  } catch (error) {
+    console.error("Error fetching books:", error); // Log full error details
+    res.status(500).json({ error: "Failed to fetch books", details: error.message });
+  }
+};
+
 // Export the functions for use in routes
-module.exports = { addBook, updateBook, searchBooks };
+module.exports = { addBook, updateBook, searchBooks, getAllBooks };

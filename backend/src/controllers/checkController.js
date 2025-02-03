@@ -8,7 +8,7 @@ const checkOutBook = async (req, res) => {
 
         console.log("Checkout request received:", { userId, bookId, expectedCheckinDate });
 
-        // Check if the book is already checked out
+        // Check if this specific book is already checked out
         const activeCheckout = await prisma.checkout.findFirst({
             where: { bookId, status: 'CHECKED_OUT' },
         });
@@ -38,16 +38,24 @@ const checkOutBook = async (req, res) => {
 
         console.log("Book checked out successfully:", checkout);
 
+        // ✅ Log all checkouts for this user
+        const allUserCheckouts = await prisma.checkout.findMany({
+            where: { userId },
+        });
+        console.log("All checkouts for user:", allUserCheckouts);
+
         res.status(201).json({ 
             message: "Book checked out successfully", 
             checkout, 
-            book // Include book details
+            book, 
+            allCheckouts: allUserCheckouts // Send back all checkouts for debugging
         });
     } catch (error) {
         console.error("Error checking out book:", error.message);
         res.status(500).json({ error: "Failed to check out book" });
     }
 };
+
 
 // Assuming you use Prisma with a direct relationship
 const getCheckOutBook = async (req, res) => {

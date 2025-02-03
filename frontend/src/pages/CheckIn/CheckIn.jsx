@@ -10,23 +10,23 @@ const [loading, setLoading] = useState(null); // Track loading per book
 useEffect(() => {
   const fetchCheckouts = async () => {
     try {
-          const token = localStorage.getItem('token'); // Get token inside the function
-          if (!token){
-            console.error("No token found, user is not authenticated.");
-            return; // Stop execution if no token
-          }
-          console.log("This is the token", token)
-
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found, user is not authenticated.");
+        return;
+      }
+  
       const response = await axios.get("http://localhost:5000/check/get-checkout", {
-        headers: { Authorization: `Bearer ${token}` }, // Use storedToken instead of token st
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      console.log("This is the response", response)
+  
+      console.log("Fetched Checkouts:", response.data.checkouts); // ✅ Log fetched checkouts
+  
       setCheckouts(response.data.checkouts);
     } catch (error) {
       console.error("Error fetching checkouts:", error);
     }
-  };
+  };  
 
   fetchCheckouts();
 }, []); // No need to depend on token
@@ -47,12 +47,11 @@ useEffect(() => {
       });
       console.log(response.data);
 
-      // Update the state with the returned book data
-      // setCheckouts((prevCheckouts) =>
-      //   prevCheckouts.map((checkout) =>
-      //     checkout.id === id ? { ...response.data.checkout } : checkout
-      //   )
-      // );
+      setCheckouts((prevCheckouts) =>
+        prevCheckouts.map((checkout) =>
+          checkout.id === id ? { ...response.data.checkout } : checkout
+        )
+      );
     } catch (error) {
       console.error("Error checking in book:", error);
     } finally {
