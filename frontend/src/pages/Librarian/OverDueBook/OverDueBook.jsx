@@ -73,8 +73,8 @@ const OverDueBooks = () => {
           ) : (
             overdueBooks.map((book) => (
               <tr key={book.id} className='text-[12px]'>
-                <td className="border border-gray-400 px-4 py-2">{new Date(book.checkoutDate).toLocaleDateString()}</td>
-                <td className="border border-gray-400 px-4 py-2">{new Date(book.expectedCheckinDate).toLocaleDateString()}</td>
+                <td className="border border-gray-400 px-4 py-2">{new Date(book.checkoutDate).toLocaleDateString("en-GB", { timeZone: "UTC" })}</td>
+                <td className="border border-gray-400 px-4 py-2">{new Date(book.expectedCheckinDate).toLocaleDateString("en-GB", { timeZone: "UTC" })}</td>
                 <td className="border border-gray-400 px-4 py-2">{book.overdueDays}</td>
                 <td className="border border-gray-400 px-4 py-2">{book.user.email}</td>
                 <td className="border border-gray-400 px-4 py-2">{book.book.title}</td>
