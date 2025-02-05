@@ -29,6 +29,7 @@ enum Role {
 model Book {
   id              Int      @id @default(autoincrement())
   title           String
+  bookPhoto       String
   isbn            String   @unique
   coverPage       String?  // Optional for book cover URL
   revisionNumber  Int
