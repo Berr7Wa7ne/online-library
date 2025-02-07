@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import axios from 'axios';
 
 const AddBook = () => {
   // State variables for form inputs
   const [title, setTitle] = useState('');
+  const [bookPhoto, setBookPhoto] = useState(null);
   const [isbn, setIsbn] = useState('');
   const [coverPage, setCoverPage] = useState('');
   const [revisionNumber, setRevisionNumber] = useState('');
@@ -13,44 +14,48 @@ const AddBook = () => {
   const [genre, setGenre] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const fileInputRef = useRef(null);
 
-  // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
     setError('');
   
-    const newBook = {
-      title,
-      isbn,
-      coverPage,
-      revisionNumber: Number(revisionNumber),
-      publishedDate,
-      publisher,
-      authors,
-      genre,
-    };
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('isbn', isbn);
+    formData.append('coverPage', coverPage);
+    formData.append('revisionNumber', Number(revisionNumber)); // Ensure it's an integer
+    formData.append('publishedDate', publishedDate);
+    formData.append('publisher', publisher);
+    formData.append('authors', authors);
+    formData.append('genre', genre);
+  
+    if (bookPhoto) {
+      formData.append('bookPhoto', bookPhoto); // Append the file correctly
+    }
   
     try {
-      const token = localStorage.getItem('token'); // Get token from local storage
+      const token = localStorage.getItem('token');
       if (!token) {
         console.error("No token found, user is not authenticated.");
-        return; // Stop execution if no token
+        return;
       }
       console.log("This is the token", token); 
   
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Include the token in headers
-          'Content-Type': 'application/json', // Set content type
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data', // Set correct content type
         },
       };
   
-      const response = await axios.post('http://localhost:5000/book/addBook', newBook, config);
+      const response = await axios.post('http://localhost:5000/book/addBook', formData, config);
       setMessage(response.data.message);
       
       // Clear form fields on successful submission
       setTitle('');
+      setBookPhoto(null);
       setIsbn('');
       setCoverPage('');
       setRevisionNumber('');
@@ -58,18 +63,35 @@ const AddBook = () => {
       setPublisher('');
       setAuthors('');
       setGenre('');
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      setBookPhoto(null);
+
     } catch (err) {
       setError('Failed to add book. Please try again.');
-      console.error('AddBook Error:', err.message);
+      console.error('AddBook Error:', err.response?.data || err.message);
     }
   };
   
+  
   //Return JSX code
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg mt-5">
+    <div className="max-w-2xl mx-auto p-6 bg-white mt-5">
       <h2 className="text-xl font-bold mb-4 text-center">Add a New Book</h2>
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
+        <div>
+            <label className="block text-sm font-medium text-gray-700">Book Photo</label>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={(e) => setBookPhoto(e.target.files[0])}
+              required
+              className="w-full p-2 border rounded"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Title</label>
             <input

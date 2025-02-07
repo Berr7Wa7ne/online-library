@@ -7,9 +7,18 @@ const addBook = async (req, res) => {
   try {
     // Destructure the request body to get book details
     const { title, isbn, coverPage, revisionNumber, publishedDate, publisher, authors, genre } = req.body;
+    const bookPhoto = req.file?.path;
+
+    // Check if bookPhoto is provided
+    if (!bookPhoto) {
+      return res.status(400).json({ error: "Book cover photo is required." });
+    }
+
     console.log("Add Book: Request body parsed successfully.", {
       title,
+      bookPhoto,
       isbn,
+      coverPage,
       revisionNumber,
       publishedDate,
       publisher,
@@ -21,9 +30,10 @@ const addBook = async (req, res) => {
     const newBook = await prisma.book.create({
       data: {
         title,
+        bookPhoto,
         isbn,
         coverPage,
-        revisionNumber,
+        revisionNumber: +revisionNumber,
         publishedDate: new Date(publishedDate), // Convert publishedDate to a Date object
         publisher,
         authors,
@@ -42,6 +52,7 @@ const addBook = async (req, res) => {
     res.status(500).json({ error: "Failed to add book" });
   }
 };
+
 
 // Update book details (Librarian-only)
 const updateBook = async (req, res) => {
