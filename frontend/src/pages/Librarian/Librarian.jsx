@@ -13,7 +13,6 @@ const Librarian = () => {
 
       {/* Main content on the right with left margin equal to sidebar width */}
       <div className="ml-64 flex-1 p-8 bg-white">
-        <h1 className="text-3xl font-bold mb-6">Welcome to the Librarian Panel</h1>
         <Outlet />
       </div>
     </div>

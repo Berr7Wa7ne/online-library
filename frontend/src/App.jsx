@@ -8,6 +8,7 @@ import Librarian from "./pages/Librarian/Librarian";
 import AddBook from "./pages/Librarian/AddBook/AddBook";
 import UpdateBook from "./pages/Librarian/UpdateBook/UpdateBook";
 import OverDueBooks from "./pages/Librarian/OverDueBook/OverDueBook";
+import LibrarianDashboard from "./pages/Librarian/LibrarianDashboard/LibrarianDashboard";
 import SuperAdmin from "./pages/SuperAdmin/SuperAdmin";
 import ManageLibrarian from "./pages/SuperAdmin/ManageLibrarians/ManageLibrarians";
 import OverDueBook from "./pages/SuperAdmin/OverDueBooks/OverDueBook";
@@ -27,6 +28,7 @@ function App() {
           {/* Librarian Panel and Sub-routes */}
           <Route path="/librarian" element={<Librarian />}>
             {/* Sub-routes for Add Book, Update Book, and Overdue Books */}
+            <Route index element={<LibrarianDashboard />} />
             <Route path="add-book" element={<AddBook />} />
             <Route path="update-book" element={<UpdateBook />} />
             <Route path="overdue-books" element={<OverDueBooks />} />
