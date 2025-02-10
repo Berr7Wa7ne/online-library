@@ -25,6 +25,13 @@ async function initializeSuperAdmin() {
         create: {
           email: superAdminEmail,
           password: await bcrypt.hash(superAdminPassword, 10),
+          firstName: 'Library', 
+          lastName: 'Superadmin',
+          displayName: 'SuperAdmin',
+          address: 'Abuja, Nigeria',
+          phoneNumber: '08108962585',
+          bio: "Managing the online library system.",
+          profilePhoto: "", // Ensure this is not null
           role: 'SUPERADMIN',
         },
       });

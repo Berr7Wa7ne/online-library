@@ -38,6 +38,14 @@ const Sidebar = () => {
             <span>Overdue Books</span>
           </Link>
         </li>
+
+          {/* Profile Section */}
+          <li>
+          <Link to="/librarian/profile" className="flex items-center space-x-3 text-lg hover:text-orange-500">
+            <span>👤</span>
+            <span>Profile</span>
+          </Link>
+        </li>
       </ul>
     </div>
   );

@@ -7,7 +7,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || process.env.JWT_SECRET;
 // CreateLibrarian Controller
 const createLibrarian = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName, displayName, address, phoneNumber, bio} = req.body;
     const profilePhoto = req.file?.path;
     console.log("Received request to create librarian with email:", email);
 
@@ -45,6 +45,12 @@ const createLibrarian = async (req, res) => {
       data: {
         email,
         password: hashedPassword,
+        firstName,
+        lastName,
+        displayName,
+        address,
+        phoneNumber,
+        bio,
         role: "LIBRARIAN",
         profilePhoto,
       },
@@ -60,7 +66,7 @@ const createLibrarian = async (req, res) => {
 
 // Registration Controller
 const register = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password, firstName, lastName, displayName, address, phoneNumber, bio, role } = req.body;
   const profilePhoto = req.file?.path; // If using multer for profile photo uploads
   console.log("Registration request received for email:", email);
   console.log("Profile photo uploaded to:", profilePhoto);
@@ -90,6 +96,12 @@ const register = async (req, res) => {
       data: {
         email,
         password: hashedPassword,
+        firstName,
+        lastName,
+        displayName,
+        address,
+        phoneNumber,
+        bio,
         role: role || "READER", // Default to "reader"
         profilePhoto,
       },

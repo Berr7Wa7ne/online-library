@@ -11,14 +11,22 @@ model User {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   password     String
+  firstName    String
+  lastName     String
+  displayName  String
+  address      String
+  phoneNumber  String
+  bio          String?
   profilePhoto String?
-  role         Role     @default(READER) // Default role is READER
+  role         Role     @default(READER) 
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   checkouts    Checkout[]
 
   @@index([email])
 }
+
 
 enum Role {
   SUPERADMIN  // Added superadmin role

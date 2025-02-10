@@ -12,10 +12,11 @@ import LibrarianDashboard from "./pages/Librarian/LibrarianDashboard/LibrarianDa
 import SuperAdmin from "./pages/SuperAdmin/SuperAdmin";
 import ManageLibrarian from "./pages/SuperAdmin/ManageLibrarians/ManageLibrarians";
 import OverDueBook from "./pages/SuperAdmin/OverDueBooks/OverDueBook";
+import Profile from "./pages/Librarian/Profile/Profile";
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Login />} />  {/* Default Login page */}
@@ -32,6 +33,7 @@ function App() {
             <Route path="add-book" element={<AddBook />} />
             <Route path="update-book" element={<UpdateBook />} />
             <Route path="overdue-books" element={<OverDueBooks />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
           {/* SuperAdmin Panel and Sub-routes */}
