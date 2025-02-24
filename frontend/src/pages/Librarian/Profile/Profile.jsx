@@ -3,69 +3,161 @@ import axios from "axios";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
-    profilePic: null,
+    profilePhoto: null,
     firstName: "",
     lastName: "",
     displayName: "",
     address: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     bio: "",
   });
   const [editing, setEditing] = useState({
     personal: false,
     bio: false,
-    profilePic: false,
+    profilePhoto: false,
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Fetch user data from backend
-    axios.get("http://localhost:5000/api/librarian/profile")
-      .then((response) => {
-        setProfile(response.data);
-      })
-      .catch((error) => console.error("Error fetching profile data:", error));
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Get token from storage
+
+        const res = await axios.get("http://localhost:5000/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Send token in headers
+          },
+        });
+  
+        const userData = res.data.user;
+        setProfile(userData);
+  
+        // Store the profile photo URL in localStorage
+        if (userData.profilePhoto) {
+          localStorage.setItem('profilePhoto', userData.profilePhoto);
+          console.log(localStorage.getItem("profilePhoto"));
+        }
+
+        console.log("This is the response data", res.data)
+
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+        setError("Failed to load profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
   }, []);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-const handleUpdate = (section) => {
-    axios.put("/api/profile", profile).then(() => {
-      setEditing((prev) => ({ ...prev, [section]: false }));
-    });
-  };
+  useEffect(() => {
+    const storedPhoto = localStorage.getItem("profilePhoto");
+    if (storedPhoto) {
+      setProfile((prev) => ({
+        ...prev,
+        profilePhoto: `http://localhost:5000${storedPhoto}`, // Ensure full URL is used
+      }));
+    }    
+  }, []);
+  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfile({ ...profile, profilePic: reader.result });
-      };
-      reader.readAsDataURL(file);
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        profilePhoto: file,
+      }));
+    }
+  };  
+  
+
+  const handleUpdate = async (section) => {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+  
+    // Append profile data except profilePhoto
+    Object.keys(profile).forEach((key) => {
+      if (key !== "profilePhoto" && profile[key]) {
+        formData.append(key, profile[key]);
+      }
+    });
+  
+    // Append profilePhoto only if it's a File
+    if (profile.profilePhoto instanceof File) {
+      formData.append("profilePhoto", profile.profilePhoto);
+    }
+  
+    try {
+      const response = await axios.put("http://localhost:5000/profile", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (response.data && response.data.updatedUser) {
+        setProfile(response.data.updatedUser); // Correct field name
+      
+        // Store the updated profile photo URL safely
+        if (response.data.updatedUser.profilePhoto) {
+          const newPhotoUrl = response.data.updatedUser.profilePhoto;
+          setProfile((prevProfile) => ({
+            ...prevProfile,
+            profilePhoto: newPhotoUrl,
+          }));
+          localStorage.setItem("profilePhoto", newPhotoUrl);
+          console.log("Updated Profile Photo:", newPhotoUrl);
+        }
+      } else {
+        console.error("Unexpected API response:", response.data);
+      }      
+  
+      alert("Profile updated successfully!");
+  
+      // Set only the specific section to false instead of resetting all
+      setEditing((prev) => ({ ...prev, [section]: false }));
+  
+    } catch (error) {
+      console.error("Error updating profile:", error.response?.data || error.message);
+      alert("Failed to update profile.");
     }
   };
-
-  const handleSave = () => {
-    axios.put("http://localhost:5000/api/librarian/profile", profile)
-      .then(() => alert("Profile updated successfully!"))
-      .catch((error) => console.error("Error updating profile:", error));
-  };
+    
+  
+  // const handleSave = () => {
+  //   axios.put("http://localhost:5000/profile", profile)
+  //     .then(() => alert("Profile updated successfully!"))
+  //     .catch((error) => console.error("Error updating profile:", error));
+  // };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       {/* Profile Picture Section */}
       <div className="flex justify-center mb-6 relative">
         <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden relative">
-          {profile.profilePic ? (
-            <img src={profile.profilePic} alt="Profile" className="w-full h-full object-cover" />
-          ) : (
-            <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          )}
+        {profile.profilePhoto ? (
+          <img
+            src={
+              profile.profilePhoto instanceof File
+                ? URL.createObjectURL(profile.profilePhoto)
+                : profile.profilePhoto || localStorage.getItem('profilePhoto') || "/default-avatar.png"
+            }
+            alt="Profile"
+            className="w-32 h-32 rounded-full object-fill"
+          />
+        ) : (
+          <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        )}
           <input type="file" accept="image/*" className="absolute inset-0 opacity-0" onChange={handleFileChange} />
         </div>
       </div>
@@ -140,7 +232,7 @@ const handleUpdate = (section) => {
             type="text"
             name="phone"
             placeholder="Phone Number"
-            value={profile.phone}
+            value={profile.phoneNumber}
             onChange={handleChange}
             className="flex-1 p-2 border border-gray-300 rounded-lg mb-4"
             disabled={!editing.personal}
@@ -171,7 +263,7 @@ const handleUpdate = (section) => {
       {/* Buttons */}
       <div className="flex gap-4 justify-end">
         <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400" onClick={() => window.location.reload()}>Cancel</button>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" onClick={handleSave}>Save</button>
+        <button onClick={() => handleUpdate("personal")} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">Save</button>
       </div>
     </div>
   );

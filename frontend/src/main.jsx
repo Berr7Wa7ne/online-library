@@ -5,7 +5,7 @@ import App from "../src/App";
 import './App.css';
 
 // Store the token (remove this after initial setup)
-const superAdminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJTVVBFUkFETUlOIiwiaWF0IjoxNzM4MjUyNjI3LCJleHAiOjE3NDA4NDQ2Mjd9.Ov1-sKm1uhIhUEjyFFXLlfu9qAYSIseHgHPJ0_erBrk';  // Replace with the actual token.
+const superAdminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJTVVBFUkFETUlOIiwiaWF0IjoxNzM5MTkwNjA4LCJleHAiOjE3NDE3ODI2MDh9.vhJEYbthJ1yT1aoqcU8ydbsNZzeOpqAsKMxlRWs8xYA';  // Replace with the actual token.
 localStorage.setItem('token', superAdminToken);
 console.log('Superadmin token stored.');
 

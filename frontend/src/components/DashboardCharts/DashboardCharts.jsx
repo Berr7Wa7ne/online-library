@@ -2,11 +2,11 @@ import React from "react";
 import { Line, Pie, Bar } from "react-chartjs-2";
 import { 
   Chart as ChartJS, 
-  CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend 
+  CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler  
 } from "chart.js";
 
 // Register required components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler);
 
 const DashboardCharts = ({ stats }) => {
   // Line Chart Data

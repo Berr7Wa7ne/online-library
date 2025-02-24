@@ -1,183 +1,98 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import mail from '../../assets/mail.png';
-import key from '../../assets/key.png';
-import user from '../../assets/user.png';
 import google from '../../assets/google.png';
 
 const SignUp = () => {
-  //State variables
   const navigate = useNavigate();
-  // const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [profilePhoto, setProfilePhoto] = useState(null)
-  const [role, setRole] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    displayName: '',
+    email: '',
+    password: '',
+    address: '',
+    phoneNumber: '',
+    bio: '',
+    profilePhoto: null,
+    role: ''
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  //Function to handle signing up
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, profilePhoto: e.target.files[0] });
+  };
+
   const handleSignUp = async (e) => {
-    console.log("Trigger API calls")
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/auth/register', {
-        // name,
-        email,
-        password,
-        profilePhoto,
-        role,
-      });
-
+      const response = await axios.post('http://localhost:5000/auth/register', formData);
       console.log('Registration successful:', response.data);
-
       navigate('/login');
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || 'Registration failed. Please try again.');
     }
+    setLoading(false);
   };
 
-
-  //Return JSX code
   return (
-    <div className="flex flex-col items-center w-full h-full px-4 sm:px-6 md:px-10 lg:px-20">
-      <div className="w-full max-w-[496px]">
-        <h2 className="text-center font-sf-pro-rounded font-semibold text-[24px] sm:text-[32px] mb-1">
-          Create account
-        </h2>
-        <p className="text-center text-[#666D80] font-sf-pro-rounded text-[12px] sm:text-[14px] mb-7">
-          Start your 30-day free trial. Cancel anytime.
-        </p>
-        {/* Sign In / Sign Up Toggle Buttons */}
-        <div className="flex bg-[#F9F9FB] rounded-[12px] w-full h-[56px] p-[4px] gap-[4px] mb-7">
-          <button className="flex-1 h-[48px] rounded-[8px] py-3 px-4 text-[#666D80]">
-            Sign In
-          </button>
-          <button className="flex-1 h-[48px] rounded-[8px] py-3 px-4 bg-white border border-[#DFE1E6]">
-            Sign Up
-          </button>
-        </div>
-        {/* Input Fields */}
-        <form className="flex flex-col space-y-4">
-        {/* Profile Photo Upload */}
-          <div>
-            <p className="font-semibold text-[#666D80] text-[14px]">Profile Photo</p>
-            <input 
-            type="file" 
-            onChange={(e) => setProfilePhoto(e.target.value)}
-            accept="image/*" 
-            className="w-full" />
-          </div>
+    <div className="flex flex-col items-center w-full h-full px-6 md:px-10 lg:px-20">
+      <div className="w-full max-w-lg">
+        <h2 className="text-center text-2xl font-semibold mb-2">Create Account</h2>
+        <p className="text-center text-gray-600 text-sm mb-6">Start your 30-day free trial. Cancel anytime.</p>
 
-          {/* Full Name */}
-          {/* <div>
-            <p className="font-sf-pro-rounded font-semibold text-[#666D80] text-[14px]">
-              Full name
-            </p>
-            <div className="w-full h-[56px] flex items-center border border-gray-300 rounded-lg">
-              <div className="flex items-center justify-center w-[50px] h-full border-r border-gray-300">
-                <img src={user} alt="User Icon" className="w-[20px] h-[20px]" />
-              </div>
-              <input
-                type="text"
-                placeholder="John Doe"
-                className="flex-1 p-2 text-[16px] font-sf-pro-rounded text-gray-600 placeholder-gray-400 focus:outline-none"
-              />
-            </div>
-          </div> */}
+        <form className="flex flex-col space-y-4" onSubmit={handleSignUp}>
+          <InputField label="Profile Photo" type="file" name="profilePhoto" onChange={handleFileChange} />
+          <InputField label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} />
+          <InputField label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} />
+          <InputField label="Display Name" name="displayName" value={formData.displayName} onChange={handleChange} />
+          <InputField label="Email" type="email" name="email" value={formData.email} onChange={handleChange} />
+          <InputField label="Password" type="password" name="password" value={formData.password} onChange={handleChange} />
+          <InputField label="Address" name="address" value={formData.address} onChange={handleChange} />
+          <InputField label="Phone Number" type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+          <InputField label="Bio" name="bio" value={formData.bio} onChange={handleChange} isTextarea />
 
-          {/* Email */}
-          <div>
-            <p className="font-sf-pro-rounded font-semibold text-[#666D80] text-[14px]">
-              Email
-            </p>
-            <div className="w-full h-[56px] flex items-center border border-gray-300 rounded-lg">
-              <div className="flex items-center justify-center w-[50px] h-full border-r border-gray-300">
-                <img src={mail} alt="Mail Icon" className="w-[20px] h-[20px]" />
-              </div>
-              <input
-                type="email"
-                name='email'
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="johndoe@mail.com"
-                className="flex-1 p-2 text-[16px] font-sf-pro-rounded text-gray-600 placeholder-gray-400 focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Password */}
-          <div>
-            <p className="font-sf-pro-rounded font-semibold text-[#666D80] text-[14px]">
-              Password
-            </p>
-            <div className="w-full h-[56px] flex items-center border border-gray-300 rounded-lg">
-              <div className="flex items-center justify-center w-[50px] h-full border-r border-gray-300">
-                <img src={key} alt="Key Icon" className="w-[20px] h-[20px]" />
-              </div>
-              <input
-                type="password"
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="flex-1 p-2 text-[16px] font-sf-pro-rounded text-gray-600 placeholder-gray-400 focus:outline-none"
-              />
-            </div>
-          </div>
-        {/* Error Message */}
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          
-          <p className="font-sf-pro-rounded text-[#808897] text-[12px]">
-            Must be at least 8 characters
-          </p>
+
+          <button type='submit' className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-500" disabled={loading}>
+            {loading ? "Creating Account..." : "Create Account"}
+          </button>
         </form>
 
-        {/* Terms and Conditions */}
-        <div className="flex items-center space-x-2 mt-4 mb-4">
-          <input
-            type="checkbox"
-            id="terms"
-            className="w-5 h-5 text-[#7047EB] border border-gray-300 rounded-[6px] focus:ring-[#7047EB]"
-          />
-          <label
-            htmlFor="terms"
-            className="text-[14px] text-[#666D80] font-sf-pro-rounded"
-          >
-            By proceeding, you agree to the{' '}
-            <span className="text-[#7047EB]">Terms and Conditions</span>
-          </label>
+        <div className="flex items-center my-6">
+          <div className="flex-1 h-[2px] bg-gray-300"></div>
+          <p className="px-4 text-gray-600 text-sm">Or</p>
+          <div className="flex-1 h-[2px] bg-gray-300"></div>
         </div>
 
-        {/* Create Account Button */}
-        <button
-            type='submit' 
-            className="w-full h-[56px] flex justify-center items-center bg-[#7047EB] text-white text-[16px] font-sf-pro-rounded font-semibold rounded-lg focus:outline-none hover:bg-[#5c38cc] transition-colors"
-            disabled={loading}
-            onClick={handleSignUp}
-        >
-          {loading ? "Creating Account..." : "Create Account"}
+        <button className="w-full flex items-center justify-center gap-2 py-3 border rounded-lg">
+          <img src={google} alt="Google" className="w-5 h-5" />
+          <span>Sign Up with Google</span>
         </button>
-
-        {/* Divider */}
-        <div className="flex items-center w-full my-6">
-          <div className="flex-1 h-[2px] bg-gray-300"></div>
-          <p className="px-4 text-[#666D80] text-[14px] font-sf-pro-rounded">
-            Or
-          </p>
-          <div className="flex-1 h-[2px] bg-gray-300"></div>
-        </div>
-
-        {/* Sign Up with Google */}
-        <div className="flex items-center justify-center gap-1">
-          <img src={google} alt="Google Icon" className="w-[20px] h-[20px]" />
-          <p className="text-[16px] font-sf-pro-rounded font-semibold text-center">
-            Sign Up with Google
-          </p>
-        </div>
       </div>
     </div>
   );
 };
+
+const InputField = ({ label, type = "text", name, value, onChange, isTextarea, onChangeFile }) => (
+  <div>
+    <label className="block text-gray-700 font-medium mb-1">{label}</label>
+    {isTextarea ? (
+      <textarea name={name} value={value} onChange={onChange} className="w-full p-2 border rounded-lg resize-none" rows="3"></textarea>
+    ) : type === "file" ? (
+      <input type="file" name={name} onChange={onChangeFile} className="w-full border rounded-lg p-2" />
+    ) : (
+      <input type={type} name={name} value={value} onChange={onChange} className="w-full p-2 border rounded-lg" />
+    )}
+  </div>
+);
 
 export default SignUp;
