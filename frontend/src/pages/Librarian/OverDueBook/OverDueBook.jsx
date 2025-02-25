@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import TopNavbar from '../../../components/TopNavbar/TopNavbar';
 
 const OverDueBooks = () => {
   //State variables
@@ -49,13 +50,15 @@ const OverDueBooks = () => {
 
   //Return JSX code
   return (
+    <div className='pt-16'>
+      <TopNavbar />
     <div className="max-w-6xl mx-auto p-8">
-      <h2 className="text-2xl font-bold mb-4">Overdue Books</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center font-sf-pro-rounded text-[orange] dark:text-gray-100">Overdue Books</h2>
       {message && <p className="text-green-500">{message}</p>}
       {error && <p className="text-red-500">{error}</p>}
       <table className="table-auto w-full border-collapse border border-gray-400">
         <thead>
-          <tr className="bg-gray-100 text-[14px]">
+          <tr className="bg-gray-200 dark:bg-gray-800 text-[14px] dark:text-gray-400">
             <th className="border border-gray-400 px-4 py-2">Checkout Date</th>
             <th className="border border-gray-400 px-4 py-2">Expected Check-in Date</th>
             <th className="border border-gray-400 px-4 py-2">Overdue Days</th>
@@ -92,6 +95,7 @@ const OverDueBooks = () => {
           )}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

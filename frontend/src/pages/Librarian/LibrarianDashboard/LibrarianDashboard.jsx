@@ -25,10 +25,9 @@ const LibrarianDashboard = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Librarian Dashboard</h2>
 
 {/* Statistics Summary */}
-<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
   {/* Total Books */}
   <div className="bg-blue-500 p-4 rounded-lg shadow-lg text-white flex items-center justify-between">
     <span className="text-4xl">📚</span>

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';  // Import Link for navigation
 
 const Sidebar = () => {
   return (
-    <div className="w-64 h-full bg-gray-800 text-white p-5">
-      <h2 className="text-2xl font-bold mb-8 text-center">Librarian Panel</h2>
+    <div className="fixed w-64 h-[480px] bg-[purple] dark:bg-gray-900 text-gray-200 p-5 border rounded-xl mt-[66px]">
       
       <ul className="space-y-6">
         {/* Library Dashboard (Overview) */}

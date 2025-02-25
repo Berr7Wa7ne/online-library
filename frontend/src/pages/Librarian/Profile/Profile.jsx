@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import TopNavbar from "../../../components/TopNavbar/TopNavbar";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -139,10 +140,12 @@ const Profile = () => {
   // };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="pt-16">
+    <TopNavbar />
+    <div className="max-w-4xl mx-auto p-6 bg-gray-100 dark:bg-gray-900 rounded-lg">
       {/* Profile Picture Section */}
       <div className="flex justify-center mb-6 relative">
-        <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden relative">
+        <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center overflow-hidden relative">
         {profile.profilePhoto ? (
           <img
             src={
@@ -164,16 +167,16 @@ const Profile = () => {
 
       {/* Name and Display Name */}
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-semibold">{profile.displayName || "Display Name"}</h2>
+        <h2 className="text-2xl font-semibold text-[purple] dark:text-gray-400 font-courgette">{profile.displayName || "Display Name"}</h2>
         <p className="text-gray-600">{profile.firstName} {profile.lastName}</p>
       </div>
 
       {/* Personal Information Section */}
       <div className="mb-6">
         <div className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Personal Information</h3>
+          <h3 className="text-lg font-semibold text-[orange] dark:text-gray-400">Personal Information</h3>
           {!editing.personal ? (
-            <button onClick={() => setEditing({ personal: true })} className="text-blue-500">Edit</button>
+            <button onClick={() => setEditing({ personal: true })} className="text-[purple] dark:text-gray-400">Edit</button>
           ) : (
             <button onClick={() => handleUpdate("personal")} className="text-green-500">Save</button>
           )}
@@ -242,10 +245,10 @@ const Profile = () => {
 
       {/* Bio Information Section */}
       <div className="mb-6">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center text-[orange] dark:text-gray-400">
           <h3 className="text-lg font-semibold">Bio Information</h3>
           {!editing.bio ? (
-            <button onClick={() => setEditing({ bio: true })} className="text-blue-500">Edit</button>
+            <button onClick={() => setEditing({ bio: true })} className="text-[purple] dark:text-gray-400">Edit</button>
           ) : (
             <button onClick={() => handleUpdate("bio")} className="text-green-500">Save</button>
           )}
@@ -263,8 +266,9 @@ const Profile = () => {
       {/* Buttons */}
       <div className="flex gap-4 justify-end">
         <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400" onClick={() => window.location.reload()}>Cancel</button>
-        <button onClick={() => handleUpdate("personal")} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">Save</button>
+        <button onClick={() => handleUpdate("personal")} className="px-4 py-2 bg-[purple] dark:bg-gray-400 hover:bg-blue-600 text-white rounded-lg">Save</button>
       </div>
+    </div>
     </div>
   );
 };

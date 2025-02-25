@@ -16,7 +16,7 @@ import Profile from "./pages/Librarian/Profile/Profile";
 
 function App() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Login />} />  {/* Default Login page */}

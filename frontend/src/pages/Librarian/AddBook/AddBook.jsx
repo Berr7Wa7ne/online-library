@@ -1,5 +1,6 @@
 import React, { useState, useRef  } from 'react';
 import axios from 'axios';
+import TopNavbar from '../../../components/TopNavbar/TopNavbar';
 
 const AddBook = () => {
   // State variables for form inputs
@@ -78,100 +79,102 @@ const AddBook = () => {
   
   //Return JSX code
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white mt-5">
-      <h2 className="text-xl font-bold mb-4 text-center">Add a New Book</h2>
+    <div className="pt-16">
+      <TopNavbar />
+      <div className="max-w-2xl mx-auto p-6 bg-gray-100 dark:bg-gray-900 mt-5">
+      <h2 className="text-2xl font-bold font-sf-pro-rounded mb-4 text-center text-[orange] dark:text-gray-100">Add a New Book</h2>
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
         <div>
-            <label className="block text-sm font-medium text-gray-700">Book Photo</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Book Photo</label>
             <input
               type="file"
               ref={fileInputRef}
               onChange={(e) => setBookPhoto(e.target.files[0])}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Title</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">ISBN</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">ISBN</label>
             <input
               type="text"
               value={isbn}
               onChange={(e) => setIsbn(e.target.value)}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Cover Page URL</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Page URL</label>
             <input
               type="text"
               value={coverPage}
               onChange={(e) => setCoverPage(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Revision Number</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Revision Number</label>
             <input
               type="number"
               value={revisionNumber}
               onChange={(e) => setRevisionNumber(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Published Date</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Published Date</label>
             <input
               type="date"
               value={publishedDate}
               onChange={(e) => setPublishedDate(e.target.value)}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Publisher</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Publisher</label>
             <input
               type="text"
               value={publisher}
               onChange={(e) => setPublisher(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Authors</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Authors</label>
             <input
               type="text"
               value={authors}
               onChange={(e) => setAuthors(e.target.value)}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Genre</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Genre</label>
             <input
               type="text"
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white"
             />
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className="bg-[purple] dark:bg-gray-400 text-white px-4 py-2 rounded"
             >
               Add Book
             </button>
@@ -180,6 +183,7 @@ const AddBook = () => {
           {error && <p className="text-red-500">{error}</p>}
         </div>
       </form>
+    </div>
     </div>
   );
 };

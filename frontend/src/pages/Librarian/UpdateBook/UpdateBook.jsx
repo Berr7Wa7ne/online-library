@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import TopNavbar from "../../../components/TopNavbar/TopNavbar";
 
 const UpdateBook = () => {
   const [books, setBooks] = useState([]);
@@ -61,8 +62,10 @@ const UpdateBook = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-8 bg-white">
-      <h2 className="text-2xl font-bold mb-4 text-center">Manage Books</h2>
+    <div className="pt-16">
+      <TopNavbar />
+    <div className="max-w-6xl mx-auto p-8 bg-gray-100 dark:bg-gray-900">
+      <h2 className="text-2xl font-bold mb-4 text-center font-sf-pro-rounded text-[orange] dark:text-gray-100">Manage Books</h2>
       {message && <p className="text-green-500">{message}</p>}
       {error && <p className="text-red-500">{error}</p>}
 
@@ -70,7 +73,7 @@ const UpdateBook = () => {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse border border-gray-300 text-sm">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-gray-200 dark:bg-gray-800">
               <th className="border border-gray-300 p-2">ID</th>
               <th className="border border-gray-300 p-2">Title</th>
               <th className="border border-gray-300 p-2">ISBN</th>
@@ -98,7 +101,7 @@ const UpdateBook = () => {
                 <td className="p-2">
                   <button
                     onClick={() => handleEdit(book)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded text-xs"
+                    className="bg-[purple] dark:bg-slate-400 text-white px-3 py-1 rounded text-xs"
                   >
                     Edit
                   </button>
@@ -112,7 +115,7 @@ const UpdateBook = () => {
       {/* Edit Modal */}
       {selectedBook && (
   <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6">
-    <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+    <div className="bg-gray-100 p-4 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
       <h3 className="text-lg font-semibold mb-3 text-center">Edit Book</h3>
       <form onSubmit={handleUpdate} className="space-y-2">
         {[
@@ -156,6 +159,7 @@ const UpdateBook = () => {
     </div>
   </div>
 )}
+    </div>
     </div>
   );
 };
