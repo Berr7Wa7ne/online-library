@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -13,36 +15,50 @@ import SuperAdmin from "./pages/SuperAdmin/SuperAdmin";
 import ManageLibrarian from "./pages/SuperAdmin/ManageLibrarians/ManageLibrarians";
 import OverDueBook from "./pages/SuperAdmin/OverDueBooks/OverDueBook";
 import Profile from "./pages/Librarian/Profile/Profile";
+import 'leaflet/dist/leaflet.css';
+
 
 function App() {
   return (
-    <div className="flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Login />} />  {/* Default Login page */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/checkin" element={<CheckIn />} />
+    <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200 min-h-screen flex flex-col">
+      {/* Toast Container for notifications */}
+      <ToastContainer 
+        position="top-right" 
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick 
+        rtl={false} 
+        pauseOnFocusLoss 
+        draggable 
+        pauseOnHover 
+        theme="dark"
+      />
 
-          {/* Librarian Panel and Sub-routes */}
-          <Route path="/librarian" element={<Librarian />}>
-            {/* Sub-routes for Add Book, Update Book, and Overdue Books */}
-            <Route index element={<LibrarianDashboard />} />
-            <Route path="add-book" element={<AddBook />} />
-            <Route path="update-book" element={<UpdateBook />} />
-            <Route path="overdue-books" element={<OverDueBooks />} />
-            <Route path="profile" element={<Profile />} />
-          </Route>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkin" element={<CheckIn />} />
 
-          {/* SuperAdmin Panel and Sub-routes */}
-          <Route path="/superadmin" element={<SuperAdmin />}>
-            {/* Sub-routes for Add Book, Update Book, and Overdue Books */}
-            <Route path="manage-librarians" element={<ManageLibrarian />} />
-            <Route path="overdue-books" element={<OverDueBook />} />
-          </Route>
-        </Routes>
+        {/* Librarian Panel and Sub-routes */}
+        <Route path="/librarian" element={<Librarian />}>
+          <Route index element={<LibrarianDashboard />} />
+          <Route path="add-book" element={<AddBook />} />
+          <Route path="update-book" element={<UpdateBook />} />
+          <Route path="overdue-books" element={<OverDueBooks />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+
+        {/* SuperAdmin Panel and Sub-routes */}
+        <Route path="/superadmin" element={<SuperAdmin />}>
+          <Route path="manage-librarians" element={<ManageLibrarian />} />
+          <Route path="overdue-books" element={<OverDueBook />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

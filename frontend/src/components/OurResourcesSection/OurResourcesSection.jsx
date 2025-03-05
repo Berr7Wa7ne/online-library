@@ -11,9 +11,9 @@ const OurResources = () => {
         Our <span className="font-courgette text-[purple]">resources</span>
       </h2>
 
-      <div className="flex justify-between items-center mt-14 space-x-4">
+      <div className="md:flex justify-between items-center mt-14 space-x-4">
         {/* Researchers */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center mb-10">
           <img className="w-20 mb-2" src={search} alt="researchers" />
           <a href="https://example.com/researchers" target="_blank" rel="noopener noreferrer">
             <h3 className="text-[purple] text-xl">Researchers</h3>
@@ -24,7 +24,7 @@ const OurResources = () => {
         </div>
 
         {/* Librarian */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center mb-10">
           <img className="w-20 mb-2" src={book} alt="librarian" />
           <a href="/login" target="_blank" rel="noopener noreferrer">
             <h3 className="text-[purple] text-xl">Librarian</h3>
@@ -35,7 +35,7 @@ const OurResources = () => {
         </div>
 
         {/* Societies */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center mb-10">
           <img className="w-20 mb-2" src={comment} alt="societies" />
           <a href="https://example.com/societies" target="_blank" rel="noopener noreferrer">
             <h3 className="text-[purple] text-xl">Societies</h3>
@@ -46,7 +46,7 @@ const OurResources = () => {
         </div>
 
         {/* Authors */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center mb-6">
           <img className="w-20 mb-2" src={shakespeare} alt="authors" />
           <a href="https://example.com/authors" target="_blank" rel="noopener noreferrer">
             <h3 className="text-[purple] text-xl">Authors</h3>

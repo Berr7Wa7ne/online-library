@@ -1,26 +1,28 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom'; // Render sub-routes
-import Sidebar from '../../components/Sidebar/Sidebar'; // Import Sidebar
-import Footer from '../../components/Footer/Footer';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Footer from "../../components/Footer/Footer";
 
-//Rendered Librarian component
 const Librarian = () => {
   return (
-    <div>
-    <div className=" flex">
-      {/* Sidebar on the left */}
-      <aside className="fixed top-0 left-0 w-64 h-full bg-gray-100 dark:bg-gray-900 shadow">
-        <Sidebar />
-      </aside>
+    <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Main Content Wrapper */}
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <aside className="fixed top-0 left-0 w-64 bg-gray-100 dark:bg-gray-900 shadow">
+          <Sidebar />
+        </aside>
 
-      {/* Main content on the right with left margin equal to sidebar width */}
-      <div className="ml-64 flex-2 p-8 bg-gray-100 dark:bg-gray-900">
-        <Outlet />
+        {/* Main Content */}
+        <main className="flex-1 p-8 ml-64">
+          <Outlet />
+        </main>
       </div>
-    </div>
-    {/* <div className='mt-7'>
-    <Footer />
-    </div> */}
+
+      {/* Footer at Bottom */}
+      <div className="mt-48">
+      </div>
+      <Footer />
     </div>
   );
 };

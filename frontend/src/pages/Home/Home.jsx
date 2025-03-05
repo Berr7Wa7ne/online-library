@@ -2,6 +2,10 @@ import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import HeroSection from '../../components/HeroSection/HeroSection';
 import OurResources from '../../components/OurResourcesSection/OurResourcesSection';
+import Services from '../../components/ServicesSection/ServicesSection';
+import Reviews from '../../components/ReviewSection/ReviewSection';
+import Location from '../../components/LocationSection/LocationSection';
+import ReaderFooter from '../../components/ReaderFooter/ReaderFooter';
 
 //Rendered Home page component
 const Home = () => {
@@ -10,6 +14,10 @@ const Home = () => {
       <Navbar />
       <HeroSection />
       <OurResources />
+      <Services />
+      <Reviews />
+      <Location />
+      <ReaderFooter />
     </div>
   );
 };
