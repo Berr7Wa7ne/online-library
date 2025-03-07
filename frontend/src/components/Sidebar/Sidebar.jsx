@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';  // Import Link for navigation
 
 const Sidebar = () => {
   return (
-    <div className="fixed w-64 h-[427px] bg-[purple] dark:bg-gray-900 text-gray-200 p-5 border rounded-xl mt-[66px]">
+    <div className="fixed w-64 h-[415px] bg-[purple] dark:bg-gray-900 text-gray-200 p-5 border rounded-xl mt-[66px]">
       
       <ul className="space-y-6">
         {/* Library Dashboard (Overview) */}

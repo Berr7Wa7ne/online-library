@@ -16,9 +16,9 @@ const OurResources = () => {
         <div className="flex flex-col items-center text-center mb-10">
           <img className="w-20 mb-2" src={search} alt="researchers" />
           <a href="https://example.com/researchers" target="_blank" rel="noopener noreferrer">
-            <h3 className="text-[purple] text-xl">Researchers</h3>
+            <h3 className="text-blue-600 text-xl font-courgette">Researchers</h3>
           </a>
-          <p className="text-gray-300 text-[14px]">
+          <p className="text-gray-600 dark:text-white text-[14px]">
             Register online <br /> Discover tools and manage alerts <br /> Learn about how to access
           </p>
         </div>
@@ -27,9 +27,9 @@ const OurResources = () => {
         <div className="flex flex-col items-center text-center mb-10">
           <img className="w-20 mb-2" src={book} alt="librarian" />
           <a href="/login" target="_blank" rel="noopener noreferrer">
-            <h3 className="text-[purple] text-xl">Librarian</h3>
+            <h3 className="text-blue-600 text-xl font-courgette">Librarian</h3>
           </a>
-          <p className="text-gray-300 text-[14px]">
+          <p className="text-gray-600 dark:text-white text-[14px]">
             Manage your account <br /> View products and solutions <br /> Find resources and support
           </p>
         </div>
@@ -38,9 +38,9 @@ const OurResources = () => {
         <div className="flex flex-col items-center text-center mb-10">
           <img className="w-20 mb-2" src={comment} alt="societies" />
           <a href="https://example.com/societies" target="_blank" rel="noopener noreferrer">
-            <h3 className="text-[purple] text-xl">Societies</h3>
+            <h3 className="text-blue-600 text-xl font-courgette">Societies</h3>
           </a>
-          <p className="text-gray-300 text-[14px]">
+          <p className="text-gray-600 dark:text-white text-[14px]">
             Publish with Wiley <br /> Explore our resource library <br /> Learn about topics and trends
           </p>
         </div>
@@ -49,9 +49,9 @@ const OurResources = () => {
         <div className="flex flex-col items-center text-center mb-6">
           <img className="w-20 mb-2" src={shakespeare} alt="authors" />
           <a href="https://example.com/authors" target="_blank" rel="noopener noreferrer">
-            <h3 className="text-[purple] text-xl">Authors</h3>
+            <h3 className="text-blue-600 text-xl font-courgette">Authors</h3>
           </a>
-          <p className="text-gray-300 text-[14px]">
+          <p className="text-gray-600 dark:text-white text-[14px]">
             Submit a paper <br /> Track your article <br /> Learn about Open Access
           </p>
         </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
-import FooterLogo from '../../assets/library-logo.jpg';
+import FooterLogo from '../../assets/library-logo.png';
 
 const ReaderFooter = () => {
   return (
-    <footer className="py-8 px-4 mt-14">
+    <footer className="py-8 px-4 mt-14 bg-gray-100 dark:bg-gray-900">
       <div className="container mx-auto flex flex-col items-center">
         {/* Top Section with Three Boxes */}
         <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl text-center md:text-left">

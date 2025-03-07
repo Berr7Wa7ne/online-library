@@ -42,7 +42,7 @@ const HeroSection = () => {
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between px-8 py-12 space-x-8 mt-24">
       <div className="lg:w-1/2 text-center lg:text-left">
-        <h1 className="text-5xl font-bold text-gray-800 leading-tight">
+        <h1 className="text-5xl font-bold text-gray-800 dark:text-white leading-tight">
           Today's research, <br /> tomorrow's innovation
         </h1>
         <p className="mt-4 text-gray-600 text-lg">

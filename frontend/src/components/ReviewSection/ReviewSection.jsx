@@ -39,7 +39,7 @@ const ReviewSection = () => {
       {/* Flex Container for Cards */}
       <div className="flex flex-col md:flex-row justify-center items-center gap-8 px-6 md:px-20 mt-14">
         {reviews.map((review) => (
-          <div key={review.id} className="bg-gray-100 p-6 rounded-lg shadow-lg w-full md:w-1/3 text-center">
+          <div key={review.id} className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full md:w-1/3 text-center">
             {/* Profile Image */}
             <img
               src={review.image}
@@ -48,7 +48,7 @@ const ReviewSection = () => {
             />
 
             {/* Review Text */}
-            <p className="text-gray-600 mt-2 text-[16px] mb-8">{review.review}</p>
+            <p className="text-gray-600 dark:text-white mt-2 text-[16px] mb-8">{review.review}</p>
             
             {/* Reviewer Name */}
             <h3 className="text-xl text-blue-600 font-semibold [16px] mb-8">{review.name}</h3>

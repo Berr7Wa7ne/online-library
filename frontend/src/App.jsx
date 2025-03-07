@@ -20,7 +20,7 @@ import 'leaflet/dist/leaflet.css';
 
 function App() {
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200 min-h-screen flex flex-col">
+    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 min-h-screen flex flex-col">
       {/* Toast Container for notifications */}
       <ToastContainer 
         position="top-right" 

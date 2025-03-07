@@ -50,11 +50,11 @@ const DashboardCharts = ({ stats }) => {
       {/* Top section with Line and Pie Chart */}
       <div className="flex flex-wrap md:flex-nowrap gap-6 mb-6">
         <div className="flex-1 bg-white p-4 rounded-lg shadow-lg">
-          <h3 className="text-xl font-semibold mb-4">Books Borrowed Over Time</h3>
+          <h3 className="text-xl font-semibold mb-4 text-[orange]">Books Borrowed Over Time</h3>
           <Line data={lineData} />
         </div>
         <div className="w-1/3 bg-white p-4 rounded-lg shadow-lg">
-          <h3 className="text-xl font-semibold mb-4">Genre Distribution</h3>
+          <h3 className="text-xl font-semibold mb-4 text-[orange]">Genre Distribution</h3>
           <Pie data={pieData} />
         </div>
       </div>
@@ -62,7 +62,7 @@ const DashboardCharts = ({ stats }) => {
       {/* Bottom section with Bar Chart and another box */}
       <div className="flex flex-wrap md:flex-nowrap gap-6">
         <div className="flex-1 bg-white p-4 rounded-lg shadow-lg">
-          <h3 className="text-xl font-semibold mb-4">Daily Check-ins</h3>
+          <h3 className="text-xl font-semibold mb-4 text-[orange]">Daily Check-ins</h3>
           <Bar data={barData} />
         </div>
         {/* <div className="w-1/3 bg-white p-4 rounded-lg shadow-lg flex items-center justify-center">

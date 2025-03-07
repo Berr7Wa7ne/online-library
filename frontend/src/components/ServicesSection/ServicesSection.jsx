@@ -4,7 +4,7 @@ import Right from "../../assets/Right.png";
 
 const Services = () => {
   return (
-    <section className="py-16 bg-gray-100">
+    <section className="py-16 bg-white dark:bg-gray-900">
       {/* Subheader */}
       <h2 className="text-center font-sf-pro-rounded text-3xl text-[orange]">
         Our <span className="font-courgette text-[purple]">services</span>
@@ -23,10 +23,10 @@ const Services = () => {
         </div>
 
         {/* Right Side (Text) */}
-        <div className="md:w-1/2 mt-4">
+        <div className="md:w-1/2 md:text-left text-center">
           <h3 className="text-2xl font-semibold mb-4 font-quicksand"><span className="font-courgette text-blue-600">Rent</span> your favorite book <br /> 
           fairly easy on <span className="font-courgette text-blue-600">Oline Library!</span></h3>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-white">
           Viewing, rent, and organize your favorite books has <br />never been easier. An integrated digital library rent <br />that’s simple to use, Lidia lets you spend less time <br />managing your work and more time actually doing it!<br /><br />
           Effortless rentals, personalized shelves—Online Library <br /> transforms book management, enhancing your <br />reading experience~
           </p>
@@ -45,12 +45,12 @@ const Services = () => {
   </div>
 
   {/* Left Side (Text) */}
-  <div className="md:w-1/2 mt-4 order-2 md:order-1">
+  <div className="md:w-1/2 mt-4 order-2 md:order-1 md:text-left text-center">
     <h3 className="text-2xl font-semibold mb-4 font-quicksand">
       Quick Book Rentals:<br />
       <span className="font-courgette text-blue-600">Dive</span> into <span className="font-courgette text-blue-600">Reading</span> Instantly
     </h3>
-    <p className="text-gray-600">
+    <p className="text-gray-600 dark:text-white">
       Discover instant literary delight. Access a vast library, <br />
       borrow your favorite reads, and dive into captivating <br />
       stories within minutes. Reading made quick and easy, <br />
