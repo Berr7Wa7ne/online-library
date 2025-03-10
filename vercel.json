@@ -1,7 +1,7 @@
 {
     "projects": {
       "frontend": {
-        "rootDirectory": "frontend"
+        "root": "frontend"
       }
     }
   }
