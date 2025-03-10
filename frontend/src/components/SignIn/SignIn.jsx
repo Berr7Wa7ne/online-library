@@ -29,6 +29,7 @@ const SignIn = () => {
               email,
               password,
           });
+          console.log("Login response:", response.data);
   
           const { token, role } = response.data; // ✅ Now extracting role directly
   
@@ -38,17 +39,25 @@ const SignIn = () => {
   
           localStorage.setItem("token", token);
           localStorage.setItem("role", role); // ✅ Store role in localStorage for later use
+          console.log("Stored role:", localStorage.getItem("role"));
   
           console.log("API Response:", response);
   
           alert("Login Successful!");
   
           // ✅ Navigate based on user role
-          if (role === "LIBRARIAN") {
-              navigate("/librarian");
-          } else {
-              navigate("/home"); // Default for readers
-          }
+          setTimeout(() => {
+            if (role === "LIBRARIAN") {
+                navigate("/librarian");
+            } else if (role === "SUPERADMIN") {
+                navigate("/superadmin");
+            } else {
+                navigate("/home");
+            }
+        }, 200); // Small delay
+        
+
+        console.log("Navigating to:", role === "LIBRARIAN" ? "/librarian" : "/home");
   
       } catch (err) {
           console.error("Login failed", err.response?.data);

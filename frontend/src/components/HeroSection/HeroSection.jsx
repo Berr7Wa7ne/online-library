@@ -59,7 +59,7 @@ const HeroSection = () => {
           />
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700"
+            className="px-4 py-2 bg-[blue] text-white hover:bg-blue-700"
           >
             🔍
           </button>
@@ -71,7 +71,7 @@ const HeroSection = () => {
               {titles.map((book, index) => (
                 <li
                   key={index}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   onClick={() => handleCheckoutNavigation(book)}
                 >
                   {book.title}

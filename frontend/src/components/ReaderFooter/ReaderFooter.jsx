@@ -39,8 +39,8 @@ const ReaderFooter = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="bg-blue-600 m-auto w-full py-10 mt-14">
-        <div className="mt-6 text-center text-sm">
+        <div className="bg-[blue] m-auto w-full py-10 mt-14">
+        <div className="mt-6 text-center text-sm text-white">
           &copy; {new Date().getFullYear()} Online Library. All rights reserved.
         </div>
         </div>

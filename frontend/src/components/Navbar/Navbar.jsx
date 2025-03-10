@@ -85,7 +85,7 @@ const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex gap-6">
-          <a href="#" className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 font-sf-pro-rounded text-[16px]">
+          <a href="/home" className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 font-sf-pro-rounded text-[16px]">
             Home
           </a>
           <a href="#" className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 font-sf-pro-rounded text-[16px]">
@@ -107,7 +107,7 @@ const Navbar = () => {
           <button onClick={toggleDarkMode} className="text-gray-600 dark:text-gray-300">
             {darkMode ? <Sun size={24} /> : <Moon size={24} />}
           </button>
-          <button className="text-white px-4 py-2 border border-[#DFE1E6] dark:border-gray-700 rounded-[10px] hover:bg-gray-100 dark:hover:bg-gray-700 bg-blue-600 font-sf-pro-rounded">
+          <button className="text-white px-4 py-2 border border-[#DFE1E6] dark:border-gray-700 rounded-[10px] hover:bg-gray-100 dark:hover:bg-gray-700 bg-[blue] font-sf-pro-rounded">
             Login
           </button>
         </div>

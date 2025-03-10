@@ -1,8 +1,8 @@
 import React from "react";
-import AuthSideImage from '../../components/AuthSideImage/AuthSideImage';
-import SignUp from '../../components/SignIn/SignIn';
-import questionCircle from '../../assets/question-circle.png';
-import libraryLogo from '../../assets/library-logo.jpg'; // Import your logo image
+import AuthSideImage from '../../../components/AuthSideImage/AuthSideImage';
+import SignIn from '../../../components/SignIn/SignIn';
+import questionCircle from '../../../assets/question-circle.png';
+import libraryLogo from '../../../assets/library-logo.jpg'; // Import your logo image
 
 const Login = () => {
   return (
@@ -26,7 +26,7 @@ const Login = () => {
       {/* Main Content */}
       <div className="flex flex-1 flex-col md:flex-row">
         <div className="flex-1 flex justify-center items-center">
-          <SignUp/>
+          <SignIn/>
         </div>
         <div className="hidden md:flex flex-1 justify-center items-center">
           <AuthSideImage />

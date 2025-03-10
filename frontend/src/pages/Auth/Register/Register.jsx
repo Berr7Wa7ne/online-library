@@ -1,8 +1,8 @@
 import React from "react";
-import AuthSideImage from '../../components/AuthSideImage/AuthSideImage';
-import SignUp from '../../components/SignUp/SignUp';
-import questionCircle from '../../assets/question-circle.png';
-import libraryLogo from '../../assets/library-logo.jpg'; // Import your logo image
+import AuthSideImage from '../../../components/AuthSideImage/AuthSideImage';
+import SignUp from '../../../components/SignUp/SignUp';
+import questionCircle from '../../../assets/question-circle.png';
+import libraryLogo from '../../../assets/library-logo.jpg'; // Import your logo image
 
 const Register = () => {
   return (
